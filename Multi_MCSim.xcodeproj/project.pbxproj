@@ -18,6 +18,8 @@
 		DBAB7E5419C9A06A009BC8D4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBAB7E3319C9A069009BC8D4 /* Cocoa.framework */; };
 		DBAB7E5C19C9A06A009BC8D4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DBAB7E5A19C9A06A009BC8D4 /* InfoPlist.strings */; };
 		DBAB7E5E19C9A06A009BC8D4 /* Multi_MCSimTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DBAB7E5D19C9A06A009BC8D4 /* Multi_MCSimTests.m */; };
+		DBAB7E6A19C9A150009BC8D4 /* VirtualMC.m in Sources */ = {isa = PBXBuildFile; fileRef = DBAB7E6819C9A150009BC8D4 /* VirtualMC.m */; };
+		DBAB7E6B19C9A150009BC8D4 /* VirtualMC.xib in Resources */ = {isa = PBXBuildFile; fileRef = DBAB7E6919C9A150009BC8D4 /* VirtualMC.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +52,9 @@
 		DBAB7E5919C9A06A009BC8D4 /* Multi_MCSimTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Multi_MCSimTests-Info.plist"; sourceTree = "<group>"; };
 		DBAB7E5B19C9A06A009BC8D4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DBAB7E5D19C9A06A009BC8D4 /* Multi_MCSimTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Multi_MCSimTests.m; sourceTree = "<group>"; };
+		DBAB7E6719C9A150009BC8D4 /* VirtualMC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VirtualMC.h; sourceTree = "<group>"; };
+		DBAB7E6819C9A150009BC8D4 /* VirtualMC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VirtualMC.m; sourceTree = "<group>"; };
+		DBAB7E6919C9A150009BC8D4 /* VirtualMC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VirtualMC.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +125,9 @@
 				DBAB7E4819C9A069009BC8D4 /* MainMenu.xib */,
 				DBAB7E4B19C9A069009BC8D4 /* Images.xcassets */,
 				DBAB7E3A19C9A069009BC8D4 /* Supporting Files */,
+				DBAB7E6719C9A150009BC8D4 /* VirtualMC.h */,
+				DBAB7E6819C9A150009BC8D4 /* VirtualMC.m */,
+				DBAB7E6919C9A150009BC8D4 /* VirtualMC.xib */,
 			);
 			path = Multi_MCSim;
 			sourceTree = "<group>";
@@ -232,6 +240,7 @@
 			files = (
 				DBAB7E3E19C9A069009BC8D4 /* InfoPlist.strings in Resources */,
 				DBAB7E4C19C9A069009BC8D4 /* Images.xcassets in Resources */,
+				DBAB7E6B19C9A150009BC8D4 /* VirtualMC.xib in Resources */,
 				DBAB7E4419C9A069009BC8D4 /* Credits.rtf in Resources */,
 				DBAB7E4A19C9A069009BC8D4 /* MainMenu.xib in Resources */,
 			);
@@ -252,6 +261,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBAB7E6A19C9A150009BC8D4 /* VirtualMC.m in Sources */,
 				DBAB7E4719C9A069009BC8D4 /* AppDelegate.m in Sources */,
 				DBAB7E4019C9A069009BC8D4 /* main.m in Sources */,
 			);
