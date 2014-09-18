@@ -26,7 +26,7 @@
     if (self) {
         [self.virtualSensorMatrix selectCellAtRow:1 column:1];
         NSButtonCell *cell = self.virtualSensorMatrix.selectedCell;
-        [cell setState:1];
+        [cell setState:0];
         // Initialization code here.
     }
     return self;

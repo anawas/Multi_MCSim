@@ -476,6 +476,7 @@
 				DBAB7E6319C9A06A009BC8D4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DBAB7E6419C9A06A009BC8D4 /* Build configuration list for PBXNativeTarget "Multi_MCSimTests" */ = {
 			isa = XCConfigurationList;
@@ -484,6 +485,7 @@
 				DBAB7E6619C9A06A009BC8D4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

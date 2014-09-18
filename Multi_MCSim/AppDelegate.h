@@ -13,5 +13,8 @@
 
 @property (assign) IBOutlet NSWindow *window;
 @property (strong) VirtualMC *virtualMCView;
+@property (strong) NSWindow *test;
+
+- (IBAction)segmentedControlClicked:(id)sender;
 
 @end
