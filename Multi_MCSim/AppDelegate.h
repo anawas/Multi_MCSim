@@ -7,13 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "VirtualMC.h"
+#import "VMCConfigController.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
-@property (strong) VirtualMC *virtualMCView;
-@property (strong) NSWindow *test;
+@property (strong) VMCConfigController *virtualMCView;
+@property (strong) NSWindow *mcConfigWindow;
 
 - (IBAction)segmentedControlClicked:(id)sender;
 

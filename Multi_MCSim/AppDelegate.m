@@ -13,13 +13,12 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
-    self.virtualMCView = [[VirtualMC alloc] initWithNibName:@"VirtualMC" bundle:[NSBundle mainBundle]];
+    self.virtualMCView = [[VMCConfigController alloc] initWithNibName:@"VirtualMC" bundle:[NSBundle mainBundle]];
     [_virtualMCView loadView];
     
     NSRect dialogBounds = NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, self.virtualMCView.view.bounds.size.width, self.virtualMCView.view.bounds.size.height);
-    self.test = [[NSWindow alloc] initWithContentRect:dialogBounds styleMask:NSTitledWindowMask backing:NSBackingStoreBuffered defer:YES];
-    [_test setContentView:self.virtualMCView.view];
-    [_test makeKeyAndOrderFront:nil];
+    self.mcConfigWindow = [[NSWindow alloc] initWithContentRect:dialogBounds styleMask:NSTitledWindowMask backing:NSBackingStoreBuffered defer:YES];
+    [_mcConfigWindow setContentView:self.virtualMCView.view];
 }
 
 
@@ -30,6 +29,7 @@
     switch (segmentNr) {
         case 0:
             NSLog(@"Adding a virtual device");
+            [_mcConfigWindow makeKeyAndOrderFront:nil];
             break;
         case 1:
             NSLog(@"Removing a virtual device");
