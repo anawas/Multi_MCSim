@@ -13,6 +13,7 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
+    self.virtualMCView = [[VirtualMC alloc] initWithNibName:@"VirtualMC" bundle:[NSBundle mainBundle]];
 }
 
 @end
