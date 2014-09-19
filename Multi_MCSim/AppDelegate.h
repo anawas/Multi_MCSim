@@ -8,13 +8,16 @@
 
 #import <Cocoa/Cocoa.h>
 #import "VMCConfigController.h"
+#import "DevicePoolTableController.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate>
 
+@property (weak) IBOutlet NSTableView *devicePoolTable;
 @property (assign) IBOutlet NSWindow *window;
 @property (strong) VMCConfigController *virtualMCView;
 @property (strong) NSWindow *mcConfigWindow;
 @property (strong) NSMutableArray *virtualDevicePool;
+@property (strong) DevicePoolTableController *poolTableDatasource;
 
 - (IBAction)segmentedControlClicked:(id)sender;
 

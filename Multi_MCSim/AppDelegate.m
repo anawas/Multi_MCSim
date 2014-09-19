@@ -28,6 +28,11 @@
     [_mcConfigWindow setContentView:self.virtualMCView.view];
     
     self.virtualDevicePool = [[NSMutableArray alloc] initWithCapacity:10];
+    
+    self.poolTableDatasource = [[DevicePoolTableController alloc] init];
+    self.poolTableDatasource.devicePool = self.virtualDevicePool;
+    
+    self.devicePoolTable.dataSource = self.poolTableDatasource;
 }
 
 
@@ -61,6 +66,7 @@
     [self.virtualDevicePool addObject:newDevice];
     
     NSLog(@"Pool has %lu devices", (unsigned long)[self.virtualDevicePool count]);
+    [_devicePoolTable reloadData];
     
 }
 
