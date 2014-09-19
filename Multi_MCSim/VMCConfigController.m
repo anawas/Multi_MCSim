@@ -7,6 +7,7 @@
 //
 
 #import "VMCConfigController.h"
+#import "VirtualDevice.h"
 
 @interface VMCConfigController ()
 @property (weak) IBOutlet NSTextFieldCell *deviceName;
@@ -16,6 +17,8 @@
 
 - (IBAction)startDeviceButtonPressed:(id)sender;
 - (IBAction)stopDeviceButtonPressed:(id)sender;
+
+- (void)setVirtualSensorMatrixWithNumber:(NSInteger)sensors;
 @end
 
 @implementation VMCConfigController
@@ -27,7 +30,7 @@
         [self.virtualSensorMatrix selectCellAtRow:1 column:1];
         NSButtonCell *cell = self.virtualSensorMatrix.selectedCell;
         [cell setState:0];
-        // Initialization code here.
+
     }
     return self;
 }
@@ -36,5 +39,35 @@
 }
 
 - (IBAction)stopDeviceButtonPressed:(id)sender {
+}
+
+- (void)setVirtualSensorMatrixWithNumber:(NSInteger)sensors {
+    if (sensors & SENSOR_TEMPERATURE) {
+        
+    }
+    
+    if (sensors & SENSOR_HUMIDITY) {
+    
+    }
+    
+    if (sensors & SENSOR_HUMIDITY) {
+        
+    }
+    
+    if (sensors & SENSOR_LEVEL) {
+        
+    }
+    
+    if (sensors & SENSOR_STATUS) {
+        
+    }
+    
+    if (sensors & SENSOR_GEOLOCATION) {
+        
+    }
+    
+    if (sensors & SENSOR_MESSAGE) {
+    
+    }
 }
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB45296C19CBEB420043A5E5 /* VirtualDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = DB45296B19CBEB420043A5E5 /* VirtualDevice.m */; };
 		DBAB7E3419C9A069009BC8D4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBAB7E3319C9A069009BC8D4 /* Cocoa.framework */; };
 		DBAB7E3E19C9A069009BC8D4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DBAB7E3C19C9A069009BC8D4 /* InfoPlist.strings */; };
 		DBAB7E4019C9A069009BC8D4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DBAB7E3F19C9A069009BC8D4 /* main.m */; };
@@ -33,6 +34,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DB45296A19CBEB420043A5E5 /* VirtualDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VirtualDevice.h; sourceTree = "<group>"; };
+		DB45296B19CBEB420043A5E5 /* VirtualDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VirtualDevice.m; sourceTree = "<group>"; };
 		DBAB7E3019C9A069009BC8D4 /* Multi_MCSim.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Multi_MCSim.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBAB7E3319C9A069009BC8D4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		DBAB7E3619C9A069009BC8D4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -128,6 +131,8 @@
 				DBAB7E6719C9A150009BC8D4 /* VMCConfigController.h */,
 				DBAB7E6819C9A150009BC8D4 /* VMCConfigController.m */,
 				DBAB7E6919C9A150009BC8D4 /* VMCConfigController.xib */,
+				DB45296A19CBEB420043A5E5 /* VirtualDevice.h */,
+				DB45296B19CBEB420043A5E5 /* VirtualDevice.m */,
 			);
 			path = Multi_MCSim;
 			sourceTree = "<group>";
@@ -262,6 +267,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBAB7E6A19C9A150009BC8D4 /* VMCConfigController.m in Sources */,
+				DB45296C19CBEB420043A5E5 /* VirtualDevice.m in Sources */,
 				DBAB7E4719C9A069009BC8D4 /* AppDelegate.m in Sources */,
 				DBAB7E4019C9A069009BC8D4 /* main.m in Sources */,
 			);
