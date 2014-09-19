@@ -9,11 +9,12 @@
 #import <Cocoa/Cocoa.h>
 #import "VMCConfigController.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
 @property (strong) VMCConfigController *virtualMCView;
 @property (strong) NSWindow *mcConfigWindow;
+@property (strong) NSMutableArray *virtualDevicePool;
 
 - (IBAction)segmentedControlClicked:(id)sender;
 

@@ -10,15 +10,10 @@
 #import "VirtualDevice.h"
 
 @interface VMCConfigController ()
-@property (weak) IBOutlet NSTextFieldCell *deviceName;
-@property (weak) IBOutlet NSSlider *updateInterval;
-@property (weak) IBOutlet NSPopUpButton *intervalMultiplier;
-@property (weak) IBOutlet NSMatrix *virtualSensorMatrix;
-
 - (IBAction)startDeviceButtonPressed:(id)sender;
 - (IBAction)stopDeviceButtonPressed:(id)sender;
+- (IBAction)adDeviceButtonPressed:(id)sender;
 
-- (void)setVirtualSensorMatrixWithNumber:(NSInteger)sensors;
 @end
 
 @implementation VMCConfigController
@@ -27,6 +22,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        [self.deviceName setStringValue:@"Test"];
         [self.virtualSensorMatrix selectCellAtRow:1 column:1];
         NSButtonCell *cell = self.virtualSensorMatrix.selectedCell;
         [cell setState:0];
@@ -39,6 +35,10 @@
 }
 
 - (IBAction)stopDeviceButtonPressed:(id)sender {
+}
+
+- (IBAction)adDeviceButtonPressed:(id)sender {
+    [self.view.window close];
 }
 
 - (void)setVirtualSensorMatrixWithNumber:(NSInteger)sensors {
