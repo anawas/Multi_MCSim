@@ -21,6 +21,8 @@
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     NSString *retValue;
+    NSMutableString *sensors = [[NSMutableString alloc] init];
+    
     VirtualDevice *device = [_devicePool objectAtIndex:row];
 
     NSString *columnTitle = [[tableColumn headerCell] stringValue];
@@ -34,7 +36,15 @@
     }
 
     if ([columnTitle isEqualToString:@"Sensors"]) {
-        retValue = @"T, H";
+        NSArray *sensorKeys = [[device builtinSensors] allKeys];
+        
+        for (NSString *aKey in sensorKeys) {
+            if ([[[device builtinSensors] valueForKey:aKey] integerValue] == NSOnState) {
+                [sensors appendString: [aKey substringWithRange:NSMakeRange(0,1)]];
+                [sensors appendString:@" "];
+            }
+        }
+        retValue = sensors;
     }
 
     if ([columnTitle isEqualToString:@"Status"]) {
