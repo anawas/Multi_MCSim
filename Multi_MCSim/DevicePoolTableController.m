@@ -20,11 +20,32 @@
 }
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+    NSString *retValue;
     VirtualDevice *device = [_devicePool objectAtIndex:row];
-    if ([device.deviceName length] > 0)
-        return device.deviceName;
-    else
-        return @"NN";
+
+    NSString *columnTitle = [[tableColumn headerCell] stringValue];
+    
+    if ([columnTitle isEqualToString:@"Device"]) {
+        if ([device.deviceName length] > 0) {
+            retValue = device.deviceName;
+        } else {
+            retValue = @"NN";
+        }
+    }
+
+    if ([columnTitle isEqualToString:@"Sensors"]) {
+        retValue = @"T, H";
+    }
+
+    if ([columnTitle isEqualToString:@"Status"]) {
+        retValue = @"running";
+    }
+
+    if ([columnTitle isEqualToString:@"Last Update"]) {
+        retValue = @"n/a";
+    }
+
+    return retValue;
 }
 
 @end
