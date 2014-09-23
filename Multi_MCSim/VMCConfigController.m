@@ -70,4 +70,27 @@
     
     }
 }
+
+- (NSDictionary *)retrieveBuiltinSensors {
+    NSMutableDictionary *sensors = [[NSMutableDictionary alloc] initWithCapacity:6];
+    
+    NSArray *cells = [_virtualSensorMatrix cells];
+    
+    for (id cell in cells) {
+        [sensors setObject:[NSNumber numberWithInteger:[cell state]] forKey:[cell title]];
+    }
+    return (NSDictionary *)sensors;
+}
+
+- (void)resetControls {
+    self.deviceName.stringValue = @"";
+
+    NSArray *cells = [_virtualSensorMatrix cells];
+    
+    for (id cell in cells) {
+        [cell setState:NSOffState];
+    }
+    
+}
+
 @end

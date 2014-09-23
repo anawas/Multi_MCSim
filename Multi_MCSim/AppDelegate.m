@@ -62,7 +62,11 @@
 
 - (void)windowWillClose:(NSNotification *)notification {
     NSLog(@"Adding device %@", self.virtualMCView.deviceName.stringValue);
-    VirtualDevice *newDevice = [[VirtualDevice alloc] initWithDeviceName:self.virtualMCView.deviceName.stringValue andNumber:12];
+    NSLog(@"%@", [_virtualMCView retrieveBuiltinSensors]);
+    
+    int deviceNr = rand();
+    VirtualDevice *newDevice = [[VirtualDevice alloc] initWithDeviceName:self.virtualMCView.deviceName.stringValue andNumber:deviceNr];
+    newDevice.builtinSensors = [_virtualMCView retrieveBuiltinSensors];
     [self.virtualDevicePool addObject:newDevice];
     
     NSLog(@"Pool has %lu devices", (unsigned long)[self.virtualDevicePool count]);
@@ -70,5 +74,8 @@
     
 }
 
+- (void)windowDidBecomeKey:(NSNotification *)notification {
+    [self.virtualMCView resetControls];
+}
 
 @end

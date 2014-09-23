@@ -25,10 +25,11 @@ enum intervalMultiplier {
 
 
 @interface VirtualDevice : NSObject
-@property (weak) NSString *deviceName;
+@property (strong) NSString *deviceName;
 @property NSInteger updateInterval;
 @property NSInteger deviceNumber;
 @property BOOL deviceIsRunning;
+@property (strong) NSDictionary *builtinSensors;
 
 - (id)initWithDeviceName:(NSString *)devName andNumber:(NSInteger)devNumber;
 - (void)setUpdateInterval:(NSInteger)updateInterval withMutliplier:(NSInteger)multiplier;

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2DB511C919D1A62D00A573F9 /* AsyncPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB511C819D1A62D00A573F9 /* AsyncPost.m */; };
 		DB2243EF19CC77F8001D06A5 /* DevicePoolTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB2243EE19CC77F8001D06A5 /* DevicePoolTableController.m */; };
 		DB45296C19CBEB420043A5E5 /* VirtualDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = DB45296B19CBEB420043A5E5 /* VirtualDevice.m */; };
 		DBAB7E3419C9A069009BC8D4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBAB7E3319C9A069009BC8D4 /* Cocoa.framework */; };
@@ -35,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2DB511C719D1A62D00A573F9 /* AsyncPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncPost.h; sourceTree = "<group>"; };
+		2DB511C819D1A62D00A573F9 /* AsyncPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncPost.m; sourceTree = "<group>"; };
 		DB2243ED19CC77F8001D06A5 /* DevicePoolTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DevicePoolTableController.h; sourceTree = "<group>"; };
 		DB2243EE19CC77F8001D06A5 /* DevicePoolTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DevicePoolTableController.m; sourceTree = "<group>"; };
 		DB45296A19CBEB420043A5E5 /* VirtualDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VirtualDevice.h; sourceTree = "<group>"; };
@@ -126,6 +129,8 @@
 		DBAB7E3919C9A069009BC8D4 /* Multi_MCSim */ = {
 			isa = PBXGroup;
 			children = (
+				2DB511C719D1A62D00A573F9 /* AsyncPost.h */,
+				2DB511C819D1A62D00A573F9 /* AsyncPost.m */,
 				DBAB7E4519C9A069009BC8D4 /* AppDelegate.h */,
 				DBAB7E4619C9A069009BC8D4 /* AppDelegate.m */,
 				DBAB7E4819C9A069009BC8D4 /* MainMenu.xib */,
@@ -275,6 +280,7 @@
 				DB45296C19CBEB420043A5E5 /* VirtualDevice.m in Sources */,
 				DBAB7E4719C9A069009BC8D4 /* AppDelegate.m in Sources */,
 				DB2243EF19CC77F8001D06A5 /* DevicePoolTableController.m in Sources */,
+				2DB511C919D1A62D00A573F9 /* AsyncPost.m in Sources */,
 				DBAB7E4019C9A069009BC8D4 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -15,5 +15,6 @@
 @property (weak) IBOutlet NSMatrix *virtualSensorMatrix;
 
 - (void)setVirtualSensorMatrixWithNumber:(NSInteger)sensors;
-
+- (NSDictionary *)retrieveBuiltinSensors;
+- (void)resetControls;
 @end
