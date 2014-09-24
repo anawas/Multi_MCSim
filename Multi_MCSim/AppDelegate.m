@@ -56,6 +56,18 @@
     }
 }
 
+- (IBAction)serverTypeChanges:(id)sender {
+    NSURL *hostUrl;
+    
+    NSLog(@"selected cell: %@", [sender selectedCell]);
+    if ([[[sender selectedCell] title] isEqualToString:@"Localhost"]) {
+        hostUrl = [[NSURL alloc] initWithString:@"http://localhost"];
+    } else {
+        hostUrl = [[NSURL alloc] initWithString:self.remoteHostUrlText.stringValue];
+    }
+    NSLog(@"%@", hostUrl);
+}
+
 /*
  * Window delegate methods
  */

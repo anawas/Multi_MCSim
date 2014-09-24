@@ -19,7 +19,9 @@
 @property (strong) NSMutableArray *virtualDevicePool;
 @property (strong) DevicePoolTableController *poolTableDatasource;
 @property (weak) IBOutlet NSTextField *apiKeyText;
+@property (weak) IBOutlet NSTextField *remoteHostUrlText;
 
 - (IBAction)segmentedControlClicked:(id)sender;
+- (IBAction)serverTypeChanges:(id)sender;
 
 @end

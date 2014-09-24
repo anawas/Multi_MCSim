@@ -15,6 +15,7 @@
             <connections>
                 <outlet property="apiKeyText" destination="gaV-Vg-aS5" id="Drx-Zz-X6s"/>
                 <outlet property="devicePoolTable" destination="mRU-hR-LZf" id="8av-GE-j0P"/>
+                <outlet property="remoteHostUrlText" destination="IoE-Ys-Q4y" id="Qaz-Fs-gee"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -675,7 +676,7 @@
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="646" height="442"/>
-                <autoresizingMask key="autoresizingMask"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <matrix verticalHuggingPriority="750" fixedFrame="YES" allowsEmptySelection="NO" autosizesCells="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RzK-x6-RIZ">
                         <rect key="frame" x="20" y="337" width="127" height="72"/>
@@ -698,6 +699,9 @@
                                 </buttonCell>
                             </column>
                         </cells>
+                        <connections>
+                            <action selector="serverTypeChanges:" target="Voe-Tx-rLC" id="gfl-2O-8xb"/>
+                        </connections>
                     </matrix>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="12K-YV-cRU">
                         <rect key="frame" x="172" y="380" width="96" height="22"/>
@@ -794,7 +798,7 @@
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
-                                        <tableColumn width="184" minWidth="10" maxWidth="3.4028234663852886e+38" id="gvs-2Z-jgx">
+                                        <tableColumn width="181.5" minWidth="10" maxWidth="3.4028234663852886e+38" id="gvs-2Z-jgx">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Last Update">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -812,7 +816,7 @@
                             </subviews>
                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </clipView>
-                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="k9n-fp-buJ">
+                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="0.25" horizontal="YES" id="k9n-fp-buJ">
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="bL9-8V-Kcb">
