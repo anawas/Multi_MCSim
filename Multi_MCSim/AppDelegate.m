@@ -9,7 +9,14 @@
 #import "AppDelegate.h"
 #import "VirtualDevice.h"
 
-@implementation AppDelegate
+@interface AppDelegate ()
+- (void)changeServerControlState:(BOOL)onOff;
+@end
+
+
+@implementation AppDelegate {
+    BOOL userStartedEditing;
+}
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -33,6 +40,7 @@
     self.poolTableDatasource.devicePool = self.virtualDevicePool;
     
     self.devicePoolTable.dataSource = self.poolTableDatasource;
+    self.remoteHostUrlText.delegate = self;
 }
 
 
@@ -59,11 +67,15 @@
 - (IBAction)serverTypeChanges:(id)sender {
     NSURL *hostUrl;
     
-    NSLog(@"selected cell: %@", [sender selectedCell]);
     if ([[[sender selectedCell] title] isEqualToString:@"Localhost"]) {
         hostUrl = [[NSURL alloc] initWithString:@"http://localhost"];
+        [self changeServerControlState:false];
     } else {
+        [self changeServerControlState:true];
         hostUrl = [[NSURL alloc] initWithString:self.remoteHostUrlText.stringValue];
+        if ([self.apiKeyCheckBox state] == NSOnState) {
+            self.apiKeyText.stringValue = [self.apiKeyCheckBox stringValue];
+        }
     }
     NSLog(@"%@", hostUrl);
 }
@@ -71,8 +83,15 @@
 /*
  * Window delegate methods
  */
-
 - (void)windowWillClose:(NSNotification *)notification {
+    // close was called when app is terminating
+    if (!userStartedEditing) {return;}
+
+    
+    // if the user pressed cancel we must not add a device;
+    if (self.virtualMCView.cancelPressed) {return;}
+    
+    userStartedEditing = false;
     NSLog(@"Adding device %@", self.virtualMCView.deviceName.stringValue);
     NSLog(@"%@", [_virtualMCView retrieveBuiltinSensors]);
     
@@ -88,6 +107,43 @@
 
 - (void)windowDidBecomeKey:(NSNotification *)notification {
     [self.virtualMCView resetControls];
+    userStartedEditing = true;
+    
+}
+
+/*
+ * NSTextFieldDelegate
+ */
+- (void)controlTextDidEndEditing:(NSNotification *)aNotification {
+    NSControl *postingObject = [aNotification object]; // the object that posted the notification
+
+    switch ([postingObject tag]) {
+        case 1001:
+            // the user edited the localhost port
+            // --> update port in devices
+            break;
+        case 1002:
+            // the user edited the remote host url.
+            // --> update remote server urls in devices
+            break;
+        case 1003:
+            // the user edited the api key.
+            // --> update api in devices
+            break;
+            
+        default:
+            break;
+    }
+    NSLog(@"posted by: %@ (tag: %ld)", postingObject, [postingObject tag]);
+}
+
+/*
+ * Private Methods
+ */
+- (void)changeServerControlState:(BOOL)onOff {
+    [_remoteHostUrlText setEnabled:onOff];
+    [_apiKeyText setEnabled:onOff];
+    [_apiKeyCheckBox setEnabled:onOff];
 }
 
 @end

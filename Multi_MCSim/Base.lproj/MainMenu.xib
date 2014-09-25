@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6245"/>
     </dependencies>
@@ -13,6 +13,7 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
+                <outlet property="apiKeyCheckBox" destination="2fD-cE-QR4" id="dDO-16-W6l"/>
                 <outlet property="apiKeyText" destination="gaV-Vg-aS5" id="Drx-Zz-X6s"/>
                 <outlet property="devicePoolTable" destination="mRU-hR-LZf" id="8av-GE-j0P"/>
                 <outlet property="remoteHostUrlText" destination="IoE-Ys-Q4y" id="Qaz-Fs-gee"/>
@@ -703,7 +704,7 @@
                             <action selector="serverTypeChanges:" target="Voe-Tx-rLC" id="gfl-2O-8xb"/>
                         </connections>
                     </matrix>
-                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="12K-YV-cRU">
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" tag="1001" translatesAutoresizingMaskIntoConstraints="NO" id="12K-YV-cRU">
                         <rect key="frame" x="172" y="380" width="96" height="22"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="Port" drawsBackground="YES" id="cZH-Ra-Ter">
                             <font key="font" metaFont="system"/>
@@ -711,13 +712,19 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IoE-Ys-Q4y">
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" tag="1002" translatesAutoresizingMaskIntoConstraints="NO" id="IoE-Ys-Q4y">
                         <rect key="frame" x="172" y="343" width="454" height="22"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="http://" drawsBackground="YES" id="jBY-oF-J5C">
+                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" tag="1002" title="http://" placeholderString="" drawsBackground="YES" usesSingleLineMode="YES" id="jBY-oF-J5C">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            <allowedInputSourceLocales>
+                                <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                            </allowedInputSourceLocales>
                         </textFieldCell>
+                        <connections>
+                            <outlet property="delegate" destination="Voe-Tx-rLC" id="qq4-6B-wMV"/>
+                        </connections>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cOJ-f3-Omm">
                         <rect key="frame" x="148" y="385" width="9" height="17"/>
@@ -753,7 +760,7 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="edc-AJ-hsi" id="mRU-hR-LZf">
-                                    <rect key="frame" x="0.0" y="0.0" width="604" height="19"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="602" height="19"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -834,13 +841,16 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                     </button>
-                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gaV-Vg-aS5">
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" tag="1003" translatesAutoresizingMaskIntoConstraints="NO" id="gaV-Vg-aS5">
                         <rect key="frame" x="304" y="311" width="322" height="22"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="MOe-bZ-5LO">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
+                        <connections>
+                            <outlet property="delegate" destination="Voe-Tx-rLC" id="Ugb-ek-XZb"/>
+                        </connections>
                     </textField>
                 </subviews>
             </view>

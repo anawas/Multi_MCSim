@@ -10,7 +10,7 @@
 #import "VMCConfigController.h"
 #import "DevicePoolTableController.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSTextFieldDelegate>
 
 @property (weak) IBOutlet NSTableView *devicePoolTable;
 @property (assign) IBOutlet NSWindow *window;
@@ -18,10 +18,14 @@
 @property (strong) NSWindow *mcConfigWindow;
 @property (strong) NSMutableArray *virtualDevicePool;
 @property (strong) DevicePoolTableController *poolTableDatasource;
+
+@property (weak) IBOutlet NSButton *apiKeyCheckBox;
 @property (weak) IBOutlet NSTextField *apiKeyText;
 @property (weak) IBOutlet NSTextField *remoteHostUrlText;
 
 - (IBAction)segmentedControlClicked:(id)sender;
 - (IBAction)serverTypeChanges:(id)sender;
+
+- (void)controlTextDidEndEditing:(NSNotification *)aNotification;
 
 @end
