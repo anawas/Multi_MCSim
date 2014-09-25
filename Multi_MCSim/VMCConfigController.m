@@ -38,6 +38,12 @@
 }
 
 - (IBAction)adDeviceButtonPressed:(id)sender {
+    self.cancelPressed = false;
+    [self.view.window close];
+}
+
+- (IBAction)cancelButtonPressed:(id)sender {
+    self.cancelPressed = true;
     [self.view.window close];
 }
 
@@ -83,14 +89,16 @@
 }
 
 - (void)resetControls {
-    self.deviceName.stringValue = @"";
+    self.deviceName.stringValue = [[NSString alloc] initWithFormat:@"device_%04d", rand()%1000+1000];
 
     NSArray *cells = [_virtualSensorMatrix cells];
     
     for (id cell in cells) {
         [cell setState:NSOffState];
     }
+    self.cancelPressed = false;
     
 }
+
 
 @end
