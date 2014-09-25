@@ -9,8 +9,10 @@
 #import "AppDelegate.h"
 #import "VirtualDevice.h"
 
-@interface AppDelegate ()
-- (void)changeServerControlState:(BOOL)onOff;
+@interface AppDelegate () {
+    BOOL useLocalHost;
+}
+- (void)toggleServerControlState;
 @end
 
 
@@ -41,6 +43,8 @@
     
     self.devicePoolTable.dataSource = self.poolTableDatasource;
     self.remoteHostUrlText.delegate = self;
+    useLocalHost = true;
+    [self toggleServerControlState];
 }
 
 
@@ -69,12 +73,16 @@
     
     if ([[[sender selectedCell] title] isEqualToString:@"Localhost"]) {
         hostUrl = [[NSURL alloc] initWithString:@"http://localhost"];
-        [self changeServerControlState:false];
+        if (![_portNumberText isEnabled]) {
+            [self toggleServerControlState];
+        }
     } else {
-        [self changeServerControlState:true];
         hostUrl = [[NSURL alloc] initWithString:self.remoteHostUrlText.stringValue];
         if ([self.apiKeyCheckBox state] == NSOnState) {
             self.apiKeyText.stringValue = [self.apiKeyCheckBox stringValue];
+        }
+        if (![_remoteHostUrlText isEnabled]) {
+            [self toggleServerControlState];
         }
     }
     NSLog(@"%@", hostUrl);
@@ -89,17 +97,20 @@
 
     
     // if the user pressed cancel we must not add a device;
-    if (self.virtualMCView.cancelPressed) {return;}
+    if (self.virtualMCView.cancelPressed) {
+        userStartedEditing = false;
+        return;
+    }
     
     userStartedEditing = false;
-    NSLog(@"Adding device %@", self.virtualMCView.deviceName.stringValue);
-    NSLog(@"%@", [_virtualMCView retrieveBuiltinSensors]);
     
     int deviceNr = rand();
     VirtualDevice *newDevice = [[VirtualDevice alloc] initWithDeviceName:self.virtualMCView.deviceName.stringValue andNumber:deviceNr];
     newDevice.builtinSensors = [_virtualMCView retrieveBuiltinSensors];
-    [self.virtualDevicePool addObject:newDevice];
+    newDevice.serverUrl = [[NSURL alloc] initWithString:self.remoteHostUrlText.stringValue];
     
+    [self.virtualDevicePool addObject:newDevice];
+    NSLog(@"%@", [newDevice description]);
     NSLog(@"Pool has %lu devices", (unsigned long)[self.virtualDevicePool count]);
     [_devicePoolTable reloadData];
     
@@ -140,10 +151,14 @@
 /*
  * Private Methods
  */
-- (void)changeServerControlState:(BOOL)onOff {
-    [_remoteHostUrlText setEnabled:onOff];
-    [_apiKeyText setEnabled:onOff];
-    [_apiKeyCheckBox setEnabled:onOff];
+- (void)toggleServerControlState {
+
+    BOOL enabled = [_remoteHostUrlText isEnabled];
+    
+        [_remoteHostUrlText setEnabled:!enabled];
+        [_apiKeyText setEnabled:!enabled];
+        [_apiKeyCheckBox setEnabled:!enabled];
+        [_portNumberText setEnabled:enabled];
 }
 
 @end

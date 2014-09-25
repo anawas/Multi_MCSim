@@ -16,6 +16,7 @@
                 <outlet property="apiKeyCheckBox" destination="2fD-cE-QR4" id="dDO-16-W6l"/>
                 <outlet property="apiKeyText" destination="gaV-Vg-aS5" id="Drx-Zz-X6s"/>
                 <outlet property="devicePoolTable" destination="mRU-hR-LZf" id="8av-GE-j0P"/>
+                <outlet property="portNumberText" destination="12K-YV-cRU" id="5ta-ox-mZE"/>
                 <outlet property="remoteHostUrlText" destination="IoE-Ys-Q4y" id="Qaz-Fs-gee"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
@@ -854,6 +855,7 @@
                     </textField>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="242" y="225"/>
         </window>
     </objects>
     <resources>

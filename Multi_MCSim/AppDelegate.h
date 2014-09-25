@@ -18,6 +18,7 @@
 @property (strong) NSWindow *mcConfigWindow;
 @property (strong) NSMutableArray *virtualDevicePool;
 @property (strong) DevicePoolTableController *poolTableDatasource;
+@property (weak) IBOutlet NSTextField *portNumberText;
 
 @property (weak) IBOutlet NSButton *apiKeyCheckBox;
 @property (weak) IBOutlet NSTextField *apiKeyText;
