@@ -37,4 +37,6 @@ enum intervalMultiplier {
 - (id)initWithDeviceName:(NSString *)devName andNumber:(NSInteger)devNumber;
 - (void)setUpdateInterval:(NSInteger)updateInterval withMutliplier:(NSInteger)multiplier;
 
+- (NSString *)description;
+
 @end

@@ -24,4 +24,13 @@
     self.updateInterval = updateInterval * multiplier;
 }
 
+- (NSString *)description {
+    NSMutableString *desc = [[NSMutableString alloc] init];
+    
+    [desc appendFormat:@"\nDevice name: %@\n", self.deviceName];
+    [desc appendFormat:@"  sending to %@\n", self.serverUrl];
+    [desc appendFormat:@"  Virtual sensors: %@\n", self.builtinSensors];
+    
+    return (NSString *)desc;
+}
 @end
