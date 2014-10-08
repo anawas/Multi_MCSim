@@ -32,7 +32,18 @@
                                                        repeats:YES];
 }
 - (void)createMeasuremnt {
-    NSLog(@"Device %@ is measuring and transmitting", _deviceName);
+    NSArray *sensors;
+    NSMutableString *data = [[NSMutableString alloc] init];
+    
+    [data appendFormat:@"\nDevice %@ is measuring and transmitting\n", _deviceName ];
+    sensors = [_builtinSensors allKeys];
+    for (NSString *aKey in sensors) {
+        if ([[_builtinSensors valueForKey:aKey] boolValue] == NSOnState) {
+            [data appendFormat:@"  ... %@ = %d\n", aKey, 123];
+        }
+    }
+    NSLog(@"%@", data);
+    data = nil;
 }
 
 - (NSString *)description {
