@@ -13,7 +13,7 @@
     self = [super init];
     
     if (self) {
-    self.deviceName = devName;
+        self.deviceName = devName;
         self.deviceNumber = devNumber;
     }
     return self;
@@ -21,7 +21,18 @@
 
 - (void)setUpdateInterval:(NSInteger)updateInterval withMutliplier:(NSInteger)multiplier {
     // we use seconds
-    self.updateInterval = updateInterval * multiplier;
+    self.updateInterval = updateInterval * multiplier;//updateInterval * multiplier;
+}
+
+- (void)startMeasuring {
+    self.deviceTimer = [NSTimer scheduledTimerWithTimeInterval:(double)_updateInterval
+                                                        target:self
+                                                      selector:@selector(createMeasuremnt)
+                                                      userInfo:nil
+                                                       repeats:YES];
+}
+- (void)createMeasuremnt {
+    NSLog(@"Device %@ is measuring and transmitting", _deviceName);
 }
 
 - (NSString *)description {

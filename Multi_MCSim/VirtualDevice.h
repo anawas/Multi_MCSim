@@ -32,10 +32,13 @@ enum intervalMultiplier {
 @property (strong) NSDictionary *builtinSensors;
 @property (strong) NSURL *serverUrl;
 @property (strong) NSString *port;
+@property (weak) NSTimer *deviceTimer;
 
 
 - (id)initWithDeviceName:(NSString *)devName andNumber:(NSInteger)devNumber;
 - (void)setUpdateInterval:(NSInteger)updateInterval withMutliplier:(NSInteger)multiplier;
+- (void)startMeasuring;
+- (void)createMeasuremnt;
 
 - (NSString *)description;
 

@@ -108,8 +108,10 @@
     VirtualDevice *newDevice = [[VirtualDevice alloc] initWithDeviceName:self.virtualMCView.deviceName.stringValue andNumber:deviceNr];
     newDevice.builtinSensors = [_virtualMCView retrieveBuiltinSensors];
     newDevice.serverUrl = [[NSURL alloc] initWithString:self.remoteHostUrlText.stringValue];
+    newDevice.updateInterval = 2;
     
     [self.virtualDevicePool addObject:newDevice];
+    [newDevice startMeasuring];
     NSLog(@"%@", [newDevice description]);
     NSLog(@"Pool has %lu devices", (unsigned long)[self.virtualDevicePool count]);
     [_devicePoolTable reloadData];
