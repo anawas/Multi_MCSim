@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AsyncPost.h"
 
 enum sensorType {
     SENSOR_TEMPERATURE = 1,
@@ -24,21 +25,25 @@ enum intervalMultiplier {
 };
 
 
-@interface VirtualDevice : NSObject
+@interface VirtualDevice : NSObject {
+    AsyncPost *broadcastModule;
+}
+
 @property (strong) NSString *deviceName;
 @property NSInteger updateInterval;
 @property NSInteger deviceNumber;
 @property BOOL deviceIsRunning;
 @property (strong) NSDictionary *builtinSensors;
-@property (strong) NSURL *serverUrl;
+@property (strong) NSString *serverUrl;
 @property (strong) NSString *port;
+@property (strong) NSString *apiKey;
 @property (weak) NSTimer *deviceTimer;
 
 
 - (id)initWithDeviceName:(NSString *)devName andNumber:(NSInteger)devNumber;
 - (void)setUpdateInterval:(NSInteger)updateInterval withMutliplier:(NSInteger)multiplier;
 - (void)startMeasuring;
-- (void)createMeasuremnt;
+- (void)createMeasurement;
 
 - (NSString *)description;
 

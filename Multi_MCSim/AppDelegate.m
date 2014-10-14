@@ -43,6 +43,7 @@
     
     self.devicePoolTable.dataSource = self.poolTableDatasource;
     self.remoteHostUrlText.delegate = self;
+    self.remoteHostUrlText.stringValue = @"https://api.thingspeak.com/update?api_key=NUVMBLC3L52NGHS5";
     useLocalHost = true;
     [self toggleServerControlState];
 }
@@ -107,8 +108,8 @@
     int deviceNr = rand();
     VirtualDevice *newDevice = [[VirtualDevice alloc] initWithDeviceName:self.virtualMCView.deviceName.stringValue andNumber:deviceNr];
     newDevice.builtinSensors = [_virtualMCView retrieveBuiltinSensors];
-    newDevice.serverUrl = [[NSURL alloc] initWithString:self.remoteHostUrlText.stringValue];
-    newDevice.updateInterval = 2;
+    newDevice.serverUrl = self.remoteHostUrlText.stringValue;
+    newDevice.updateInterval = 30;
     
     [self.virtualDevicePool addObject:newDevice];
     [newDevice startMeasuring];
@@ -157,10 +158,12 @@
 
     BOOL enabled = [_remoteHostUrlText isEnabled];
     
-        [_remoteHostUrlText setEnabled:!enabled];
-        [_apiKeyText setEnabled:!enabled];
-        [_apiKeyCheckBox setEnabled:!enabled];
-        [_portNumberText setEnabled:enabled];
+    [_remoteHostUrlText setEnabled:!enabled];
+    [_apiKeyText setEnabled:!enabled];
+    [_apiKeyCheckBox setEnabled:!enabled];
+    [_portNumberText setEnabled:enabled];
+    
+    useLocalHost = !enabled;
 }
 
 @end

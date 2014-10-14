@@ -15,6 +15,7 @@
     if (self) {
         self.deviceName = devName;
         self.deviceNumber = devNumber;
+        broadcastModule = [[AsyncPost alloc] init];
     }
     return self;
 }
@@ -27,22 +28,22 @@
 - (void)startMeasuring {
     self.deviceTimer = [NSTimer scheduledTimerWithTimeInterval:(double)_updateInterval
                                                         target:self
-                                                      selector:@selector(createMeasuremnt)
+                                                      selector:@selector(createMeasurement)
                                                       userInfo:nil
                                                        repeats:YES];
 }
-- (void)createMeasuremnt {
+- (void)createMeasurement {
     NSArray *sensors;
     NSMutableString *data = [[NSMutableString alloc] init];
     
-    [data appendFormat:@"\nDevice %@ is measuring and transmitting\n", _deviceName ];
     sensors = [_builtinSensors allKeys];
     for (NSString *aKey in sensors) {
         if ([[_builtinSensors valueForKey:aKey] boolValue] == NSOnState) {
-            [data appendFormat:@"  ... %@ = %d\n", aKey, 123];
+            [data appendFormat:@"&field1=%d", rand()];
         }
     }
     NSLog(@"%@", data);
+    [broadcastModule sendRequest: _serverUrl payLoad:data sender:self];
     data = nil;
 }
 
