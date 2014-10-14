@@ -25,8 +25,9 @@ enum intervalMultiplier {
 };
 
 
-@interface VirtualDevice : NSObject {
+@interface VirtualDevice : NSObject <NSURLConnectionDelegate> {
     AsyncPost *broadcastModule;
+    NSMutableData *httpResponse;
 }
 
 @property (strong) NSString *deviceName;
@@ -37,6 +38,7 @@ enum intervalMultiplier {
 @property (strong) NSString *serverUrl;
 @property (strong) NSString *port;
 @property (strong) NSString *apiKey;
+@property (strong) NSString *channelKey;
 @property (weak) NSTimer *deviceTimer;
 
 
@@ -47,4 +49,8 @@ enum intervalMultiplier {
 - (void)registerDeviceWithPlatform;
 - (NSString *)description;
 
+// AsyncPost delegate methods
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response;
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data;
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection;
 @end

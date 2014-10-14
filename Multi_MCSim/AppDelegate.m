@@ -43,7 +43,8 @@
     
     self.devicePoolTable.dataSource = self.poolTableDatasource;
     self.remoteHostUrlText.delegate = self;
-    self.remoteHostUrlText.stringValue = @"https://api.thingspeak.com/update?api_key=NUVMBLC3L52NGHS5";
+    self.remoteHostUrlText.stringValue = @"https://api.thingspeak.com";
+    self.apiKeyText.stringValue = @"NRGMUAYVO2CVS5CT";
     useLocalHost = true;
     [self toggleServerControlState];
 }
@@ -80,7 +81,7 @@
     } else {
         hostUrl = [[NSURL alloc] initWithString:self.remoteHostUrlText.stringValue];
         if ([self.apiKeyCheckBox state] == NSOnState) {
-            self.apiKeyText.stringValue = [self.apiKeyCheckBox stringValue];
+            //self.apiKeyText.stringValue = [self.apiKeyCheckBox stringValue];
         }
         if (![_remoteHostUrlText isEnabled]) {
             [self toggleServerControlState];
@@ -95,7 +96,6 @@
 - (void)windowWillClose:(NSNotification *)notification {
     // close was called when app is terminating
     if (!userStartedEditing) {return;}
-
     
     // if the user pressed cancel we must not add a device;
     if (self.virtualMCView.cancelPressed) {
@@ -109,10 +109,16 @@
     VirtualDevice *newDevice = [[VirtualDevice alloc] initWithDeviceName:self.virtualMCView.deviceName.stringValue andNumber:deviceNr];
     newDevice.builtinSensors = [_virtualMCView retrieveBuiltinSensors];
     newDevice.serverUrl = self.remoteHostUrlText.stringValue;
+    newDevice.apiKey = self.apiKeyText.stringValue;
     newDevice.updateInterval = 30;
     
-    [self.virtualDevicePool addObject:newDevice];
+    // calling this method blocks the thread. For now this is on purpose, 'cause we must wait
+    // unitl a new channel is created.
     [newDevice registerDeviceWithPlatform];
+
+    // now we add it to our pool
+    [self.virtualDevicePool addObject:newDevice];
+
     [newDevice startMeasuring];
     NSLog(@"%@", [newDevice description]);
     NSLog(@"Pool has %lu devices", (unsigned long)[self.virtualDevicePool count]);
