@@ -37,7 +37,34 @@
     [request setHTTPBody: requestData];
     NSLog(@"request = %@", request);
     
-    [[NSURLConnection alloc] initWithRequest:request delegate:sender];
+    NSURLResponse *theRespose;
+    NSURLConnection *theConnection = [[NSURLConnection alloc] initWithRequest:request delegate:sender];
+    
+    if (!theConnection) {
+        NSLog(@"ERROR -- COULD NOT OPEN A CONNECTION");
+    }
+}
+- (NSData *)sendSynchronousRequest:(NSString*)url payLoad:(NSString*)body sender:(NSObject*) sender {
+    NSMutableString* requestURL = [[NSMutableString alloc] init];
+    [requestURL appendString:url];
+    
+    NSMutableString* requestBody = [[NSMutableString alloc] init];
+    [requestBody appendString:body];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL: [NSURL URLWithString: [NSString stringWithString:requestURL]]];
+    
+    NSString* requestBodyString = [NSString stringWithString:requestBody];
+    NSData *requestData = [NSData dataWithBytes: [requestBodyString UTF8String] length: [requestBodyString length]];
+    
+    [request setHTTPMethod: @"POST"];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
+    [request setHTTPBody: requestData];
+    NSLog(@"request = %@", request);
+    
+    NSURLResponse *theRespose;
+    NSData *responseData = [[NSURLConnection sendSynchronousRequest:request returningResponse:&theRespose error:nil] copy];
+    
+    return responseData;
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response

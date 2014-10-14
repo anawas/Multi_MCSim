@@ -11,4 +11,5 @@
 }
 
 - (void)sendRequest:(NSString*)url payLoad:(NSString*)body sender:(NSObject*) sender;
+- (NSData *)sendSynchronousRequest:(NSString*)url payLoad:(NSString*)body sender:(NSObject*) sender;
 @end
