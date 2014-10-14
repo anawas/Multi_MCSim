@@ -56,4 +56,11 @@
     
     return (NSString *)desc;
 }
+
+- (void)registerDeviceWithPlatform {
+    NSMutableString *data = [[NSMutableString alloc] init];
+    [data appendFormat:@"name=%@", _deviceName];
+    
+    [broadcastModule sendRequest:@"https://api.thingspeak.com/channels?api_key=NRGMUAYVO2CVS5CT" payLoad: data sender:self];
+}
 @end

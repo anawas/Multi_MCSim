@@ -112,6 +112,7 @@
     newDevice.updateInterval = 30;
     
     [self.virtualDevicePool addObject:newDevice];
+    [newDevice registerDeviceWithPlatform];
     [newDevice startMeasuring];
     NSLog(@"%@", [newDevice description]);
     NSLog(@"Pool has %lu devices", (unsigned long)[self.virtualDevicePool count]);

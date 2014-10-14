@@ -44,7 +44,7 @@ enum intervalMultiplier {
 - (void)setUpdateInterval:(NSInteger)updateInterval withMutliplier:(NSInteger)multiplier;
 - (void)startMeasuring;
 - (void)createMeasurement;
-
+- (void)registerDeviceWithPlatform;
 - (NSString *)description;
 
 @end
