@@ -109,15 +109,22 @@
     userStartedEditing = false;
     
     int deviceNr = rand();
+    NSLog(@"************* update intervall = %ld", self.virtualMCView.timeIntervalText.integerValue);
     VirtualDevice *newDevice = [[VirtualDevice alloc] initWithDeviceName:self.virtualMCView.deviceName.stringValue andNumber:deviceNr];
     newDevice.serverUrl = self.remoteHostUrlText.stringValue;
     newDevice.port = self.remotePortNumberText.integerValue;
-    newDevice.updateInterval = 30;
+    int multiplier = 0;
+    if ([self.virtualMCView.timeFrame.selectedItem.title compare:@"Seconds"] == 0) {
+        multiplier = MULTIPLIER_SECONDS;
+    } else if ([self.virtualMCView.timeFrame.selectedItem.title compare:@"Minutes"] == 0) {
+        multiplier = MULTIPLIER_MINUTES;
+    } else {
+        multiplier= MULTIPLIER_HOURS;
+    }
+
+    [newDevice setUpdateInterval:self.virtualMCView.timeIntervalText.integerValue withMutliplier:multiplier];
     [newDevice startSocketAtPort:self.targetPort andUrl:self.targetHostUrl];
     
-    // calling this method blocks the thread. For now this is on purpose, 'cause we must wait
-    // unitl a new channel is created.
-    //[newDevice registerDeviceWithPlatform];
 
     // now we add it to our pool
     [self.virtualDevicePool addObject:newDevice];
