@@ -21,7 +21,6 @@
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     NSString *retValue;
-    NSMutableString *sensors = [[NSMutableString alloc] init];
     
     VirtualDevice *device = [_devicePool objectAtIndex:row];
 
@@ -33,18 +32,6 @@
         } else {
             retValue = @"NN";
         }
-    }
-
-    if ([columnTitle isEqualToString:@"Sensors"]) {
-        NSArray *sensorKeys = [[device builtinSensors] allKeys];
-        
-        for (NSString *aKey in sensorKeys) {
-            if ([[[device builtinSensors] valueForKey:aKey] integerValue] == NSOnState) {
-                [sensors appendString: [aKey substringWithRange:NSMakeRange(0,1)]];
-                [sensors appendString:@" "];
-            }
-        }
-        retValue = sensors;
     }
 
     if ([columnTitle isEqualToString:@"Status"]) {
