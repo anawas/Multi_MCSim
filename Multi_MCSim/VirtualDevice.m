@@ -35,6 +35,7 @@ enum {
         self.sensorList = [[NSArray alloc] initWithObjects:locSensor, battSens, accSens, gsmSensor, nil];
         
         udpSocket = [[GCDAsyncUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+        self.lastUpdate = [NSDate date];
         
     }
     return self;
@@ -110,8 +111,8 @@ enum {
     NSData *dummy = [_sensorList[LOCATIONSENSOR] readDataStream];
     [data appendData: dummy];
     
-    NSDate *today = [NSDate date];
-    [data appendData:[self byteStreamFromDate:today]];
+    self.lastUpdate = [NSDate date];
+    [data appendData:[self byteStreamFromDate:self.lastUpdate]];
     
     [data appendData:[_sensorList[BATTERYSENSOR] readDataStream]];
     [data appendData:[_sensorList[ACCELERATIONSENSOR] readDataStream]];
@@ -126,6 +127,8 @@ enum {
     [udpSocket sendData:data toHost:self.serverUrl port:self.port withTimeout:-1 tag:_msgId];
     //[data writeToFile:@"/Users/andreas/WualaCloud/Development/platformtesting/multimcsim.dat" atomically:YES];
     NSLog(@"SENT (%i): %@", (int)_msgId, data);
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"DeviceUpdatedNotification" object:self];
     data = nil;
 }
 

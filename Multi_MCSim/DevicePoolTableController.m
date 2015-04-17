@@ -35,11 +35,15 @@
     }
 
     if ([columnTitle isEqualToString:@"Status"]) {
-        retValue = @"running";
+        if (device.deviceIsRunning) {
+            retValue = @"running";
+        } else {
+            retValue = @"stopped";
+        }
     }
 
     if ([columnTitle isEqualToString:@"Last Update"]) {
-        retValue = @"n/a";
+        retValue =  [device.lastUpdate descriptionWithCalendarFormat:@"%d.%m.%Y %H:%M:%S" timeZone:nil locale:[NSLocale currentLocale]];
     }
 
     return retValue;

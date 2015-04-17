@@ -51,6 +51,15 @@
     self.targetPort = 47053;
     self.portNumberText.stringValue = [NSString stringWithFormat:@"%ld", (long)self.targetPort];
     [self toggleServerControlState];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+            selector:@selector(aDeviceUpdated:)
+            name:@"DeviceUpdatedNotification"
+            object:nil];
+}
+
+- (void)aDeviceUpdated:(NSNotification *)notification {
+    [_devicePoolTable reloadData];
 }
 
 
@@ -109,7 +118,6 @@
     userStartedEditing = false;
     
     int deviceNr = rand();
-    NSLog(@"************* update intervall = %ld", self.virtualMCView.timeIntervalText.integerValue);
     VirtualDevice *newDevice = [[VirtualDevice alloc] initWithDeviceName:self.virtualMCView.deviceName.stringValue andNumber:deviceNr];
     newDevice.serverUrl = self.remoteHostUrlText.stringValue;
     newDevice.port = self.remotePortNumberText.integerValue;
@@ -130,6 +138,7 @@
     [self.virtualDevicePool addObject:newDevice];
 
     [newDevice startMeasuring];
+    newDevice.deviceIsRunning = YES;
     NSLog(@"%@", [newDevice description]);
     NSLog(@"Pool has %lu devices", (unsigned long)[self.virtualDevicePool count]);
     [_devicePoolTable reloadData];
@@ -181,5 +190,7 @@
     
     useLocalHost = !enabled;
 }
+
+
 
 @end

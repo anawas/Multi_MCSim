@@ -27,6 +27,7 @@ enum intervalMultiplier {
 @property NSInteger msgId;
 @property short status;
 @property BOOL deviceIsRunning;
+@property NSDate *lastUpdate;
 //@property (strong) NSDictionary *builtinSensors;
 @property (strong) NSString *serverUrl;
 @property NSInteger port;
