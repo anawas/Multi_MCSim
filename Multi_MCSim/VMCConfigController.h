@@ -12,11 +12,10 @@
 @property (strong) IBOutlet NSTextField *deviceName;
 @property (weak) IBOutlet NSSlider *updateInterval;
 @property (weak) IBOutlet NSPopUpButton *intervalMultiplier;
-@property (weak) IBOutlet NSMatrix *virtualSensorMatrix;
 @property BOOL cancelPressed;
 
-- (void)setVirtualSensorMatrixWithNumber:(NSInteger)sensors;
 - (NSDictionary *)retrieveBuiltinSensors;
 - (void)resetControls;
 - (IBAction)cancelButtonPressed:(id)sender;
+- (IBAction)newIdButtonPressed:(id)sender;
 @end
