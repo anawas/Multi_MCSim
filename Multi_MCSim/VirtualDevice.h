@@ -7,16 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AsyncPost.h"
-
-enum sensorType {
-    SENSOR_TEMPERATURE = 1,
-    SENSOR_HUMIDITY = (1 << 1),
-    SENSOR_LEVEL = (1 << 2),
-    SENSOR_STATUS = (1 << 3),
-    SENSOR_GEOLOCATION = (1 << 4),
-    SENSOR_MESSAGE = (1 << 5)
-};
 
 enum intervalMultiplier {
     MULTIPLIER_SECONDS = 1,
@@ -24,33 +14,30 @@ enum intervalMultiplier {
     MULTIPLIER_HOURS = 3600
 };
 
+@class GCDAsyncUdpSocket;
 
-@interface VirtualDevice : NSObject <NSURLConnectionDelegate> {
-    AsyncPost *broadcastModule;
-    NSMutableData *httpResponse;
+@interface VirtualDevice : NSObject {
+    GCDAsyncUdpSocket *udpSocket;
 }
 
 @property (strong) NSString *deviceName;
+@property (strong) NSArray *sensorList;
 @property NSInteger updateInterval;
 @property NSInteger deviceNumber;
+@property NSInteger msgId;
+@property short status;
 @property BOOL deviceIsRunning;
-@property (strong) NSDictionary *builtinSensors;
+//@property (strong) NSDictionary *builtinSensors;
 @property (strong) NSString *serverUrl;
-@property (strong) NSString *port;
-@property (strong) NSString *apiKey;
-@property (strong) NSString *channelKey;
+@property NSInteger port;
 @property (weak) NSTimer *deviceTimer;
 
 
 - (id)initWithDeviceName:(NSString *)devName andNumber:(NSInteger)devNumber;
+- (void)startSocketAtPort:(NSInteger)thePort andUrl:(NSString *)addr;
 - (void)setUpdateInterval:(NSInteger)updateInterval withMutliplier:(NSInteger)multiplier;
 - (void)startMeasuring;
 - (void)createMeasurement;
-- (void)registerDeviceWithPlatform;
 - (NSString *)description;
 
-// AsyncPost delegate methods
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response;
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data;
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection;
 @end

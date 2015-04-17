@@ -7,6 +7,16 @@
 //
 
 #import "VirtualDevice.h"
+#import "SensorImports.h"
+#import "GCDAsyncUdpSocket.h"
+
+enum {
+    LOCATIONSENSOR = 0,
+    BATTERYSENSOR,
+    ACCELERATIONSENSOR,
+    GSMSENSOR
+} sensorindex;
+    
 
 @implementation VirtualDevice
 - (id)initWithDeviceName:(NSString *)devName andNumber:(NSInteger)devNumber {
@@ -14,11 +24,55 @@
     
     if (self) {
         self.deviceName = devName;
-        self.deviceNumber = devNumber;
-        broadcastModule = [[AsyncPost alloc] init];
+        self.deviceNumber = [devName integerValue];
+        self.msgId = 0;
+        self.status = 1;
+        AccelerationSensor *accSens = [[AccelerationSensor alloc] init];
+        BatterySensor *battSens = [[BatterySensor alloc] init];
+        LocationSensor *locSensor = [[LocationSensor alloc] init];
+        GSMSensor *gsmSensor = [[GSMSensor alloc] init];
+        
+        self.sensorList = [[NSArray alloc] initWithObjects:locSensor, battSens, accSens, gsmSensor, nil];
+        
+        udpSocket = [[GCDAsyncUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+        
     }
     return self;
 }
+
+- (void) dealloc {
+    ;
+}
+- (void)startSocketAtPort:(NSInteger)thePort andUrl:(NSString *)addr {
+    NSError *error = nil;
+    
+    if ([addr length] == 0)
+    {
+        NSLog(@"Address required");
+        return;
+    }
+    self.serverUrl = addr;
+
+    
+    if (thePort <= 0 || thePort > 65535)
+    {
+        NSLog(@"Valid port required");
+        return;
+    }
+    self.port = thePort;
+    
+    if (![udpSocket bindToPort:0 error:&error])
+    {
+        NSLog(@"Error binding: %@", error);
+        return;
+    }
+    if (![udpSocket beginReceiving:&error])
+    {
+        NSLog(@"Error receiving: %@", error);
+        return;
+    }
+}
+
 
 - (void)setUpdateInterval:(NSInteger)updateInterval withMutliplier:(NSInteger)multiplier {
     // we use seconds
@@ -26,6 +80,7 @@
 }
 
 - (void)startMeasuring {
+    //_updateInterval = 1;
     self.deviceTimer = [NSTimer scheduledTimerWithTimeInterval:(double)_updateInterval
                                                         target:self
                                                       selector:@selector(createMeasurement)
@@ -33,20 +88,67 @@
                                                        repeats:YES];
 }
 - (void)createMeasurement {
-    NSArray *sensors;
-    NSMutableString *data = [[NSMutableString alloc] init];
+    NSInteger timeCost = 0;
+    NSInteger temp;
     
-    NSString *completeUrl = [[NSString alloc] initWithFormat:@"%@/update?api_key=%@", _serverUrl, _channelKey ];
-
-    sensors = [_builtinSensors allKeys];
-    for (NSString *aKey in sensors) {
-        if ([[_builtinSensors valueForKey:aKey] boolValue] == NSOnState) {
-            [data appendFormat:@"&field1=%d", rand()];
-        }
+    NSMutableData *data = [[NSMutableData alloc] init];
+    _msgId++;
+    for(int i = 0; i < _sensorList.count; i++) {
+        [_sensorList[i] generateNewData];
     }
-    NSLog(@"%@", data);
-    [broadcastModule sendRequest: completeUrl payLoad:data sender:self];
+    
+    // must be careful here! Swapping the original variable changes its content!
+    // better use a temp value.
+    temp = _deviceNumber;
+    swap_bytes_4((unsigned char *)&temp);
+    [data appendBytes:&temp length:4];
+    [data appendBytes:&_status length:1];
+    
+    temp = _msgId;
+    swap_bytes_4((unsigned char *)&temp);
+    [data appendBytes:&temp length:4];
+    NSData *dummy = [_sensorList[LOCATIONSENSOR] readDataStream];
+    [data appendData: dummy];
+    
+    NSDate *today = [NSDate date];
+    [data appendData:[self byteStreamFromDate:today]];
+    
+    [data appendData:[_sensorList[BATTERYSENSOR] readDataStream]];
+    [data appendData:[_sensorList[ACCELERATIONSENSOR] readDataStream]];
+
+    timeCost = arc4random_uniform(10000) + 20000;
+    temp = timeCost;
+    swap_bytes_4((unsigned char *)&temp);
+    [data appendBytes:&temp length:4];
+    
+    [data appendData:[_sensorList[GSMSENSOR] readDataStream]];
+    
+    [udpSocket sendData:data toHost:self.serverUrl port:self.port withTimeout:-1 tag:_msgId];
+    //[data writeToFile:@"/Users/andreas/WualaCloud/Development/platformtesting/multimcsim.dat" atomically:YES];
+    NSLog(@"SENT (%i): %@", (int)_msgId, data);
     data = nil;
+}
+
+- (NSData *)byteStreamFromDate:(NSDate *)theDate {
+    NSMutableData *stream = [[NSMutableData alloc] init];
+    char y,m,d,H,M,S;
+    
+    NSCalendarDate *cal = [theDate dateWithCalendarFormat:@"%Y%m%d%H%M%S" timeZone:nil];
+    y = [cal yearOfCommonEra] - 2000;
+    m = [cal monthOfYear];
+    d = [cal dayOfMonth];
+    H = [cal hourOfDay];
+    M = [cal minuteOfHour];
+    S = [cal secondOfMinute];
+    
+    [stream appendBytes:&y length:1];
+    [stream appendBytes:&m length:1];
+    [stream appendBytes:&d length:1];
+    [stream appendBytes:&H length:1];
+    [stream appendBytes:&M length:1];
+    [stream appendBytes:&S length:1];
+    
+    return stream;
 }
 
 - (NSString *)description {
@@ -54,95 +156,41 @@
     
     [desc appendFormat:@"\nDevice name: %@\n", self.deviceName];
     [desc appendFormat:@"  sending to %@\n", self.serverUrl];
-    [desc appendFormat:@"  Virtual sensors: %@\n", self.builtinSensors];
+    //[desc appendFormat:@"  Virtual sensors: %@\n", self.builtinSensors];
     
     return (NSString *)desc;
 }
 
-- (void)registerDeviceWithPlatform {
-    NSMutableString *data = [[NSMutableString alloc] init];
-    [data appendFormat:@"name=%@", _deviceName];
-    
-    NSString *completeUrl = [[NSString alloc] initWithFormat:@"%@/channels?api_key=%@", _serverUrl, _apiKey ];
-    
-    NSData *responseData = [broadcastModule sendSynchronousRequest:completeUrl payLoad:data sender:self];
-    NSLog(@"Data received = %@", responseData);
+- (void)udpSocket:(GCDAsyncUdpSocket *)sock didSendDataWithTag:(long)tag
+{
+    // You could add checks here
+}
 
-    completeUrl = nil;
-    
-    if(NSClassFromString(@"NSJSONSerialization"))
+/***** UDPSocket delegate methods *****/
+
+- (void)udpSocket:(GCDAsyncUdpSocket *)sock didNotSendDataWithTag:(long)tag dueToError:(NSError *)error
+{
+    // You could add checks here
+}
+
+- (void)udpSocket:(GCDAsyncUdpSocket *)sock didReceiveData:(NSData *)data
+      fromAddress:(NSData *)address
+withFilterContext:(id)filterContext
+{
+    NSString *msg = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    if (msg)
     {
-        NSError *error = nil;
-        id object = [NSJSONSerialization
-                     JSONObjectWithData:responseData
-                     options:0
-                     error:&error];
-        
-        if(error) { /* JSON was malformed, act appropriately here */ }
-        
-        // the originating poster wants to deal with dictionaries;
-        // assuming you do too then something like this is the first
-        // validation step:
-        if([object isKindOfClass:[NSDictionary class]])
-        {
-            NSDictionary *results = object;
-            NSLog(@"%@", [results allKeys]);
-            
-            // there is a lot of info sent back from Platform
-            // For now, we're only interested in the channel api key so that
-            // we can send data to it.
-            id apikeysArray = [results objectForKey:@"api_keys"];
-            if ([apikeysArray isKindOfClass:[NSArray class]]) {
-                NSLog(@"%@", [[apikeysArray objectAtIndex:0] allKeys]);
-                self.channelKey = [[apikeysArray objectAtIndex:0] objectForKey:@"api_key"];
-            }
-            /* proceed with results as you like; the assignment to
-             an explicit NSDictionary * is artificial step to get
-             compile-time checking from here on down (and better autocompletion
-             when editing). You could have just made object an NSDictionary *
-             in the first place but stylistically you might prefer to keep
-             the question of type open until it's confirmed */
-        }
-        else
-        {
-            /* there's no guarantee that the outermost object in a JSON
-             packet will be a dictionary; if we get here then it wasn't,
-             so 'object' shouldn't be treated as an NSDictionary; probably
-             you need to report a suitable error condition */
-        }
+        NSLog(@"RECV: %@", msg);
     }
     else
     {
-        // the user is using iOS 4; we'll need to use a third-party solution.
-        // If you don't intend to support iOS 4 then get rid of this entire
-        // conditional and just jump straight to
-        // NSError *error = nil;
-        // [NSJSONSerialization JSONObjectWithData:...
+        NSString *host = nil;
+        uint16_t port = 0;
+        [GCDAsyncUdpSocket getHost:&host port:&port fromAddress:address];
+        
+        NSLog(@"RECV: Unknown message from: %@:%hu", host, port);
     }
-
-    data = nil;
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    [httpResponse setLength:0];
-}
-
-// Called when data has been received
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    [httpResponse appendData:data];
-}
-
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    NSString* responseString = [[[NSString alloc] initWithData:httpResponse encoding:NSUTF8StringEncoding] copy];
-    
-    // Do something with the response
-
-    connection = nil;
-    httpResponse = nil;
-}
 
 @end
