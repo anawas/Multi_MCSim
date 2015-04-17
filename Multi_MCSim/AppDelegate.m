@@ -191,6 +191,9 @@
     useLocalHost = !enabled;
 }
 
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication {
+    return YES;
+}
 
 
 @end
