@@ -35,9 +35,17 @@ uint32_t carrierId[18] = {
 - (NSData *)readDataStream {
     NSMutableData *stream = [[NSMutableData alloc] init];
     
-    [stream appendBytes:&_carrier length:2];
     [stream appendBytes:&_strength length:1];
+    
+    swap_bytes_4((unsigned char *)&_carrier);
+    [stream appendBytes:&_carrier length:4];
+    
+    
     return (NSData *)stream;
+}
+
+- (NSString *)description {
+    return @"GSM Sensor";
 }
 
 @end

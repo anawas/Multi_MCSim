@@ -8,6 +8,7 @@
 
 #import "LocationSensor.h"
 
+
 @implementation LocationSensor
 
 - (id)init {
@@ -51,12 +52,22 @@
     NSMutableData *stream = [[NSMutableData alloc] init];
         
     // -U is a union defined in SensorProtocol
-    _u.fvalue = self.longitude;
-    [stream appendBytes:_u.bstream length:4];
-    
     _u.fvalue = self.latitude;
+    
+    swap_bytes_4(_u.bstream);
     [stream appendBytes:_u.bstream length:4];
+    NSLog(@"data = %@", stream);
+
+    _u.fvalue = self.longitude;
+    swap_bytes_4(_u.bstream);
+    [stream appendBytes:_u.bstream length:4];
+    NSLog(@"data = %@", stream);
     return stream;
 }
+
+- (NSString *)description {
+    return @"Location Sensor";
+}
+
 
 @end

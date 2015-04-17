@@ -7,6 +7,8 @@
 //
 
 #import "BatterySensor.h"
+#include "swapbytes.h"
+
 
 @implementation BatterySensor
 
@@ -30,11 +32,17 @@
     
     // _u is a union defined in SensorProtocol
     _u.fvalue = self.voltage;
+    swap_bytes_4(_u.bstream);
     [stream appendBytes:_u.bstream length:4];
     
     _u.fvalue = self.charge;
+    swap_bytes_4(_u.bstream);
     [stream appendBytes:_u.bstream length:4];
     return (NSData *)stream;
+}
+
+- (NSString *)description {
+    return @"Battery Sensor";
 }
 
 

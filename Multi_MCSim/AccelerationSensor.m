@@ -44,6 +44,11 @@
 - (NSData *)readDataStream {
     NSMutableData *stream = [[NSMutableData alloc] init];
     
+    swap_bytes_2((unsigned char *)&_accelx);
+    swap_bytes_2((unsigned char *)&_accely);
+    swap_bytes_2((unsigned char *)&_accelz);
+    swap_bytes_2((unsigned char *)&_acceltemp);
+
     [stream appendBytes:&_accelx length:2];
     [stream appendBytes:&_accely length:2];
     [stream appendBytes:&_accelz length:2];
@@ -51,5 +56,9 @@
     [stream appendBytes:&_acceldetect length:1];
 
     return stream;
+}
+
+- (NSString *)description {
+    return @"Acceleration Sensor";
 }
 @end

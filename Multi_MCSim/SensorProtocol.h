@@ -9,10 +9,13 @@
 #ifndef Multi_MCSim_SensorProtocol_h
 #define Multi_MCSim_SensorProtocol_h
 
+#include "swapbytes.h"
+
 union {
     float fvalue;
     unsigned char bstream[4];
 } _u;
+
 
 @protocol SensorProtocol
 - (void)generateNewData;
