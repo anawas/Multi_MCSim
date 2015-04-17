@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "AccelerationSensor.h"
 
 @interface Multi_MCSimTests : XCTestCase
 
@@ -28,7 +29,13 @@
 
 - (void)testExample
 {
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+    AccelerationSensor *sensor = [[AccelerationSensor alloc] init];
+    NSLog(@"AccelerationSensor stream = %@", [sensor readDataStream]);
+    
+    for (int i = 0; i < 100; i++) {
+        [sensor generateNewData];
+        NSLog(@"GSMSensor stream = %@", [sensor readDataStream]);
+    }
 }
 
 @end

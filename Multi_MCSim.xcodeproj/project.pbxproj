@@ -17,12 +17,17 @@
 		DBAB7E4719C9A069009BC8D4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DBAB7E4619C9A069009BC8D4 /* AppDelegate.m */; };
 		DBAB7E4A19C9A069009BC8D4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = DBAB7E4819C9A069009BC8D4 /* MainMenu.xib */; };
 		DBAB7E4C19C9A069009BC8D4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBAB7E4B19C9A069009BC8D4 /* Images.xcassets */; };
-		DBAB7E5319C9A069009BC8D4 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBAB7E5219C9A069009BC8D4 /* XCTest.framework */; };
 		DBAB7E5419C9A06A009BC8D4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBAB7E3319C9A069009BC8D4 /* Cocoa.framework */; };
 		DBAB7E5C19C9A06A009BC8D4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DBAB7E5A19C9A06A009BC8D4 /* InfoPlist.strings */; };
 		DBAB7E5E19C9A06A009BC8D4 /* Multi_MCSimTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DBAB7E5D19C9A06A009BC8D4 /* Multi_MCSimTests.m */; };
 		DBAB7E6A19C9A150009BC8D4 /* VMCConfigController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBAB7E6819C9A150009BC8D4 /* VMCConfigController.m */; };
 		DBAB7E6B19C9A150009BC8D4 /* VMCConfigController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DBAB7E6919C9A150009BC8D4 /* VMCConfigController.xib */; };
+		E14A892A1AE0455A004C91D7 /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = E14A89291AE0455A004C91D7 /* GCDAsyncUdpSocket.m */; };
+		E14D1F281ADF8D9600C0C69A /* LocationSensor.m in Sources */ = {isa = PBXBuildFile; fileRef = E14D1F271ADF8D9600C0C69A /* LocationSensor.m */; };
+		E14D1F2C1ADF9A6300C0C69A /* BatterySensor.m in Sources */ = {isa = PBXBuildFile; fileRef = E14D1F2B1ADF9A6300C0C69A /* BatterySensor.m */; };
+		E14D1F2F1ADF9EC100C0C69A /* AccelerationSensor.m in Sources */ = {isa = PBXBuildFile; fileRef = E14D1F2E1ADF9EC100C0C69A /* AccelerationSensor.m */; };
+		E14D1F321ADFA30D00C0C69A /* GSMSensor.m in Sources */ = {isa = PBXBuildFile; fileRef = E14D1F311ADFA30D00C0C69A /* GSMSensor.m */; };
+		E16B6DBB1AE0F73100462BF7 /* swapbytes.c in Sources */ = {isa = PBXBuildFile; fileRef = E16B6DB91AE0F73100462BF7 /* swapbytes.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,13 +62,26 @@
 		DBAB7E4919C9A069009BC8D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		DBAB7E4B19C9A069009BC8D4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		DBAB7E5119C9A069009BC8D4 /* Multi_MCSimTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Multi_MCSimTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		DBAB7E5219C9A069009BC8D4 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		DBAB7E5919C9A06A009BC8D4 /* Multi_MCSimTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Multi_MCSimTests-Info.plist"; sourceTree = "<group>"; };
 		DBAB7E5B19C9A06A009BC8D4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DBAB7E5D19C9A06A009BC8D4 /* Multi_MCSimTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Multi_MCSimTests.m; sourceTree = "<group>"; };
 		DBAB7E6719C9A150009BC8D4 /* VMCConfigController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMCConfigController.h; sourceTree = "<group>"; };
 		DBAB7E6819C9A150009BC8D4 /* VMCConfigController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMCConfigController.m; sourceTree = "<group>"; };
 		DBAB7E6919C9A150009BC8D4 /* VMCConfigController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VMCConfigController.xib; sourceTree = "<group>"; };
+		E14A89281AE0455A004C91D7 /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
+		E14A89291AE0455A004C91D7 /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
+		E14D1F251ADF8D1C00C0C69A /* SensorProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SensorProtocol.h; sourceTree = "<group>"; };
+		E14D1F261ADF8D9600C0C69A /* LocationSensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationSensor.h; sourceTree = "<group>"; };
+		E14D1F271ADF8D9600C0C69A /* LocationSensor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationSensor.m; sourceTree = "<group>"; };
+		E14D1F2A1ADF9A6300C0C69A /* BatterySensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BatterySensor.h; sourceTree = "<group>"; };
+		E14D1F2B1ADF9A6300C0C69A /* BatterySensor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BatterySensor.m; sourceTree = "<group>"; };
+		E14D1F2D1ADF9EC100C0C69A /* AccelerationSensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerationSensor.h; sourceTree = "<group>"; };
+		E14D1F2E1ADF9EC100C0C69A /* AccelerationSensor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccelerationSensor.m; sourceTree = "<group>"; };
+		E14D1F301ADFA30D00C0C69A /* GSMSensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSMSensor.h; sourceTree = "<group>"; };
+		E14D1F311ADFA30D00C0C69A /* GSMSensor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSMSensor.m; sourceTree = "<group>"; };
+		E14D1F361ADFD15700C0C69A /* SensorImports.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SensorImports.h; sourceTree = "<group>"; };
+		E16B6DB91AE0F73100462BF7 /* swapbytes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = swapbytes.c; sourceTree = "<group>"; };
+		E16B6DBA1AE0F73100462BF7 /* swapbytes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = swapbytes.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,7 +98,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBAB7E5419C9A06A009BC8D4 /* Cocoa.framework in Frameworks */,
-				DBAB7E5319C9A069009BC8D4 /* XCTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,7 +127,6 @@
 			isa = PBXGroup;
 			children = (
 				DBAB7E3319C9A069009BC8D4 /* Cocoa.framework */,
-				DBAB7E5219C9A069009BC8D4 /* XCTest.framework */,
 				DBAB7E3519C9A069009BC8D4 /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -129,6 +145,7 @@
 		DBAB7E3919C9A069009BC8D4 /* Multi_MCSim */ = {
 			isa = PBXGroup;
 			children = (
+				E14A892B1AE04586004C91D7 /* UDPClient */,
 				2DB511C719D1A62D00A573F9 /* AsyncPost.h */,
 				2DB511C819D1A62D00A573F9 /* AsyncPost.m */,
 				DBAB7E4519C9A069009BC8D4 /* AppDelegate.h */,
@@ -143,6 +160,9 @@
 				DB45296B19CBEB420043A5E5 /* VirtualDevice.m */,
 				DB2243ED19CC77F8001D06A5 /* DevicePoolTableController.h */,
 				DB2243EE19CC77F8001D06A5 /* DevicePoolTableController.m */,
+				E14D1F291ADF9A4700C0C69A /* SensorClasses */,
+				E16B6DB91AE0F73100462BF7 /* swapbytes.c */,
+				E16B6DBA1AE0F73100462BF7 /* swapbytes.h */,
 			);
 			path = Multi_MCSim;
 			sourceTree = "<group>";
@@ -175,6 +195,32 @@
 				DBAB7E5A19C9A06A009BC8D4 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E14A892B1AE04586004C91D7 /* UDPClient */ = {
+			isa = PBXGroup;
+			children = (
+				E14A89281AE0455A004C91D7 /* GCDAsyncUdpSocket.h */,
+				E14A89291AE0455A004C91D7 /* GCDAsyncUdpSocket.m */,
+			);
+			name = UDPClient;
+			sourceTree = "<group>";
+		};
+		E14D1F291ADF9A4700C0C69A /* SensorClasses */ = {
+			isa = PBXGroup;
+			children = (
+				E14D1F251ADF8D1C00C0C69A /* SensorProtocol.h */,
+				E14D1F261ADF8D9600C0C69A /* LocationSensor.h */,
+				E14D1F271ADF8D9600C0C69A /* LocationSensor.m */,
+				E14D1F2A1ADF9A6300C0C69A /* BatterySensor.h */,
+				E14D1F2B1ADF9A6300C0C69A /* BatterySensor.m */,
+				E14D1F2D1ADF9EC100C0C69A /* AccelerationSensor.h */,
+				E14D1F2E1ADF9EC100C0C69A /* AccelerationSensor.m */,
+				E14D1F301ADFA30D00C0C69A /* GSMSensor.h */,
+				E14D1F311ADFA30D00C0C69A /* GSMSensor.m */,
+				E14D1F361ADFD15700C0C69A /* SensorImports.h */,
+			);
+			name = SensorClasses;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -277,11 +323,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBAB7E6A19C9A150009BC8D4 /* VMCConfigController.m in Sources */,
+				E14A892A1AE0455A004C91D7 /* GCDAsyncUdpSocket.m in Sources */,
 				DB45296C19CBEB420043A5E5 /* VirtualDevice.m in Sources */,
+				E14D1F2F1ADF9EC100C0C69A /* AccelerationSensor.m in Sources */,
 				DBAB7E4719C9A069009BC8D4 /* AppDelegate.m in Sources */,
 				DB2243EF19CC77F8001D06A5 /* DevicePoolTableController.m in Sources */,
+				E16B6DBB1AE0F73100462BF7 /* swapbytes.c in Sources */,
 				2DB511C919D1A62D00A573F9 /* AsyncPost.m in Sources */,
 				DBAB7E4019C9A069009BC8D4 /* main.m in Sources */,
+				E14D1F321ADFA30D00C0C69A /* GSMSensor.m in Sources */,
+				E14D1F281ADF8D9600C0C69A /* LocationSensor.m in Sources */,
+				E14D1F2C1ADF9A6300C0C69A /* BatterySensor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
