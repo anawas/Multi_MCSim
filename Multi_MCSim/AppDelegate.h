@@ -20,9 +20,10 @@
 @property (strong) DevicePoolTableController *poolTableDatasource;
 @property (weak) IBOutlet NSTextField *portNumberText;
 
-@property (weak) IBOutlet NSButton *apiKeyCheckBox;
-@property (weak) IBOutlet NSTextField *apiKeyText;
 @property (weak) IBOutlet NSTextField *remoteHostUrlText;
+@property (weak) IBOutlet NSTextField *remotePortNumberText;
+@property (weak) NSString *targetHostUrl;
+@property NSInteger targetPort;
 
 - (IBAction)segmentedControlClicked:(id)sender;
 - (IBAction)serverTypeChanges:(id)sender;

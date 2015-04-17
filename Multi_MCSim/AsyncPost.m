@@ -37,7 +37,7 @@
     [request setHTTPBody: requestData];
     NSLog(@"request = %@", request);
     
-    NSURLResponse *theRespose;
+    //NSURLResponse *theRespose;
     NSURLConnection *theConnection = [[NSURLConnection alloc] initWithRequest:request delegate:sender];
     
     if (!theConnection) {
@@ -80,7 +80,7 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    NSString* responseString = [[[NSString alloc] initWithData:httpResponse encoding:NSUTF8StringEncoding] copy];
+    //NSString* responseString = [[[NSString alloc] initWithData:httpResponse encoding:NSUTF8StringEncoding] copy];
     
     // Do something with the response
     

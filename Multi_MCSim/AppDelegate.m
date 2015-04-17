@@ -43,9 +43,13 @@
     
     self.devicePoolTable.dataSource = self.poolTableDatasource;
     self.remoteHostUrlText.delegate = self;
-    self.remoteHostUrlText.stringValue = @"https://api.thingspeak.com";
-    self.apiKeyText.stringValue = @"NRGMUAYVO2CVS5CT";
+    
+    // the ip of our ec2 instance
+    self.remoteHostUrlText.stringValue = @"54.149.44.69";
     useLocalHost = true;
+    self.targetHostUrl = @"localhost";
+    self.targetPort = 47053;
+    self.portNumberText.stringValue = [NSString stringWithFormat:@"%ld", (long)self.targetPort];
     [self toggleServerControlState];
 }
 
@@ -74,15 +78,14 @@
     NSURL *hostUrl;
     
     if ([[[sender selectedCell] title] isEqualToString:@"Localhost"]) {
-        hostUrl = [[NSURL alloc] initWithString:@"http://localhost"];
+        self.targetHostUrl = @"localhost";
+        self.targetPort = self.portNumberText.integerValue;
         if (![_portNumberText isEnabled]) {
             [self toggleServerControlState];
         }
     } else {
-        hostUrl = [[NSURL alloc] initWithString:self.remoteHostUrlText.stringValue];
-        if ([self.apiKeyCheckBox state] == NSOnState) {
-            //self.apiKeyText.stringValue = [self.apiKeyCheckBox stringValue];
-        }
+        self.targetHostUrl = self.remoteHostUrlText.stringValue;
+        self.targetPort = self.remotePortNumberText.integerValue;
         if (![_remoteHostUrlText isEnabled]) {
             [self toggleServerControlState];
         }
@@ -107,14 +110,14 @@
     
     int deviceNr = rand();
     VirtualDevice *newDevice = [[VirtualDevice alloc] initWithDeviceName:self.virtualMCView.deviceName.stringValue andNumber:deviceNr];
-    newDevice.builtinSensors = [_virtualMCView retrieveBuiltinSensors];
     newDevice.serverUrl = self.remoteHostUrlText.stringValue;
-    newDevice.apiKey = self.apiKeyText.stringValue;
+    newDevice.port = self.remotePortNumberText.integerValue;
     newDevice.updateInterval = 30;
+    [newDevice startSocketAtPort:self.targetPort andUrl:self.targetHostUrl];
     
     // calling this method blocks the thread. For now this is on purpose, 'cause we must wait
     // unitl a new channel is created.
-    [newDevice registerDeviceWithPlatform];
+    //[newDevice registerDeviceWithPlatform];
 
     // now we add it to our pool
     [self.virtualDevicePool addObject:newDevice];
@@ -166,8 +169,7 @@
     BOOL enabled = [_remoteHostUrlText isEnabled];
     
     [_remoteHostUrlText setEnabled:!enabled];
-    [_apiKeyText setEnabled:!enabled];
-    [_apiKeyCheckBox setEnabled:!enabled];
+    [_remotePortNumberText setEnabled:!enabled];
     [_portNumberText setEnabled:enabled];
     
     useLocalHost = !enabled;
