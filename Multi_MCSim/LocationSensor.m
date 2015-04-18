@@ -37,7 +37,7 @@
     
     value = (float)arc4random()/(float)RAND_MAX/2.0;
     
-    if (((float)arc4random()/(float)RAND_MAX) >= 0.5) value *= -1.0;
+    if (((float)arc4random()/(float)(2.0 * RAND_MAX)) >= 0.5) value *= -1.0;
     return value;
 }
 
