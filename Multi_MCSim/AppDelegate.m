@@ -9,10 +9,16 @@
 #import "AppDelegate.h"
 #import "VirtualDevice.h"
 
+@class VirtualDevice;
+
 @interface AppDelegate () {
     BOOL useLocalHost;
 }
 - (void)toggleServerControlState;
+- (VirtualDevice *)createVirtualDeviceWithName:(NSString *)deviceName
+                                     andNumber:(NSInteger)number
+                                updateInterval:(NSInteger)interval
+                                 andMultiplier:(NSInteger)multiplier;
 @end
 
 
@@ -45,7 +51,7 @@
     self.remoteHostUrlText.delegate = self;
     
     // the ip of our ec2 instance
-    self.remoteHostUrlText.stringValue = @"54.149.44.69";
+    self.remoteHostUrlText.stringValue = @"52.24.24.169";
     useLocalHost = true;
     self.targetHostUrl = @"localhost";
     self.targetPort = 47053;
@@ -63,6 +69,22 @@
 }
 
 
+- (IBAction)menuItemSelected:(id)sender {
+    long itemTagSelected = [(NSMenuItem *)sender tag];
+
+    switch (itemTagSelected) {
+        case 1:
+            NSLog(@"Creating a stress test");
+            break;
+        case 2:
+            NSLog(@"Cleaning up stress test");
+            break;
+            
+        default:
+            break;
+    }
+}
+
 - (IBAction)segmentedControlClicked:(id)sender {
     
     NSInteger segmentNr = [(NSSegmentedControl *)sender selectedSegment];
@@ -77,6 +99,8 @@
             break;
         case 2:
             NSLog(@"Advanced option clicked");
+            [self.stressTestPopup popUpMenuPositioningItem:nil atLocation:[NSEvent mouseLocation] inView:nil];
+             
             break;
         default:
             break;
@@ -102,6 +126,7 @@
     NSLog(@"%@", hostUrl);
 }
 
+
 /*
  * Window delegate methods
  */
@@ -118,9 +143,8 @@
     userStartedEditing = false;
     
     int deviceNr = rand();
-    VirtualDevice *newDevice = [[VirtualDevice alloc] initWithDeviceName:self.virtualMCView.deviceName.stringValue andNumber:deviceNr];
-    newDevice.serverUrl = self.remoteHostUrlText.stringValue;
-    newDevice.port = self.remotePortNumberText.integerValue;
+    VirtualDevice *newDevice;
+    
     int multiplier = 0;
     if ([self.virtualMCView.timeFrame.selectedItem.title compare:@"Seconds"] == 0) {
         multiplier = MULTIPLIER_SECONDS;
@@ -130,8 +154,10 @@
         multiplier= MULTIPLIER_HOURS;
     }
 
-    [newDevice setUpdateInterval:self.virtualMCView.timeIntervalText.integerValue withMutliplier:multiplier];
-    [newDevice startSocketAtPort:self.targetPort andUrl:self.targetHostUrl];
+    newDevice = [self createVirtualDeviceWithName:self.virtualMCView.deviceName.stringValue
+                                        andNumber:deviceNr
+                                   updateInterval:self.virtualMCView.timeIntervalText.integerValue
+                                    andMultiplier:multiplier];
     
 
     // now we add it to our pool
@@ -163,8 +189,7 @@
             // --> update port in devices
             break;
         case 1002:
-            // the user edited the remote host url.
-            // --> update remote server urls in devices
+            self.targetHostUrl = self.remoteHostUrlText.stringValue;
             break;
         case 1003:
             // the user edited the api key.
@@ -194,6 +219,42 @@
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication {
     return YES;
 }
+
+- (VirtualDevice *)createVirtualDeviceWithNumber:(NSInteger)deviceNr {
+    
+    VirtualDevice *newDevice = [[VirtualDevice alloc] initWithDeviceName:self.virtualMCView.deviceName.stringValue andNumber:deviceNr];
+    newDevice.serverUrl = self.remoteHostUrlText.stringValue;
+    newDevice.port = self.remotePortNumberText.integerValue;
+    int multiplier = 0;
+    if ([self.virtualMCView.timeFrame.selectedItem.title compare:@"Seconds"] == 0) {
+        multiplier = MULTIPLIER_SECONDS;
+    } else if ([self.virtualMCView.timeFrame.selectedItem.title compare:@"Minutes"] == 0) {
+        multiplier = MULTIPLIER_MINUTES;
+    } else {
+        multiplier= MULTIPLIER_HOURS;
+    }
+    
+    [newDevice setUpdateInterval:self.virtualMCView.timeIntervalText.integerValue withMutliplier:multiplier];
+    [newDevice startSocketAtPort:self.targetPort andUrl:self.targetHostUrl];
+    return newDevice;
+}
+
+
+- (VirtualDevice *)createVirtualDeviceWithName:(NSString *)deviceName
+                                     andNumber:(NSInteger)number
+                                updateInterval:(NSInteger)interval
+                                 andMultiplier:(NSInteger)multiplier
+{
+    VirtualDevice *newDevice = [[VirtualDevice alloc] initWithDeviceName:deviceName
+                                                               andNumber:number];
+    newDevice.serverUrl = self.remoteHostUrlText.stringValue;
+    newDevice.port = self.remotePortNumberText.integerValue;
+    
+    [newDevice setUpdateInterval:self.virtualMCView.timeIntervalText.integerValue withMutliplier:multiplier];
+    [newDevice startSocketAtPort:self.targetPort andUrl:self.targetHostUrl];
+    return newDevice;
+}
+
 
 
 @end

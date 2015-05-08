@@ -102,6 +102,8 @@ enum {
     // better use a temp value.
     temp = _deviceNumber;
     swap_bytes_4((unsigned char *)&temp);
+    // The new protocol assume a double 4 byte number, we just double the input
+    [data appendBytes:&_deviceNumber length:4];
     [data appendBytes:&temp length:4];
     [data appendBytes:&_status length:1];
     
@@ -117,6 +119,7 @@ enum {
     [data appendData:[_sensorList[BATTERYSENSOR] readDataStream]];
     [data appendData:[_sensorList[ACCELERATIONSENSOR] readDataStream]];
 
+    [data appendBytes:&_status length:1];
     timeCost = arc4random_uniform(10000) + 20000;
     temp = timeCost;
     swap_bytes_4((unsigned char *)&temp);
@@ -126,7 +129,6 @@ enum {
     
     [udpSocket sendData:data toHost:self.serverUrl port:self.port withTimeout:-1 tag:_msgId];
     //[data writeToFile:@"/Users/andreas/WualaCloud/Development/platformtesting/multimcsim.dat" atomically:YES];
-    NSLog(@"SENT (%i): %@", (int)_msgId, data);
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"DeviceUpdatedNotification" object:self];
     data = nil;

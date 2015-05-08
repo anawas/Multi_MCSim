@@ -56,12 +56,10 @@
     
     swap_bytes_4(_u.bstream);
     [stream appendBytes:_u.bstream length:4];
-    NSLog(@"data = %@", stream);
 
     _u.fvalue = self.longitude;
     swap_bytes_4(_u.bstream);
     [stream appendBytes:_u.bstream length:4];
-    NSLog(@"data = %@", stream);
     return stream;
 }
 

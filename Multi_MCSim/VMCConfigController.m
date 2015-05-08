@@ -79,8 +79,7 @@
     NSLog(@"posted by: %@ (tag: %ld)", postingObject, [postingObject tag]);
 }
 
-- (BOOL)control:(NSControl *)control
-textShouldEndEditing:(NSText *)fieldEditor {
+- (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor {
     
     if (self.timeIntervalText.stringValue.integerValue <= 0) return NO;
     return YES;

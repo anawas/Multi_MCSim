@@ -19,11 +19,13 @@
 @property (strong) NSMutableArray *virtualDevicePool;
 @property (strong) DevicePoolTableController *poolTableDatasource;
 @property (weak) IBOutlet NSTextField *portNumberText;
+@property (weak) IBOutlet NSMenu *stressTestPopup;
 
 @property (weak) IBOutlet NSTextField *remoteHostUrlText;
 @property (weak) IBOutlet NSTextField *remotePortNumberText;
 @property (weak) NSString *targetHostUrl;
 @property NSInteger targetPort;
+- (IBAction)menuItemSelected:(id)sender;
 
 - (IBAction)segmentedControlClicked:(id)sender;
 - (IBAction)serverTypeChanges:(id)sender;
