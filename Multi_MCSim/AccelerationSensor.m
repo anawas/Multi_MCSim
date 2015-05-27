@@ -43,20 +43,40 @@
 
 - (NSData *)readDataStream {
     NSMutableData *stream = [[NSMutableData alloc] init];
+    short temp = 0;
     
-    swap_bytes_2((unsigned char *)&_accelx);
-    swap_bytes_2((unsigned char *)&_accely);
-    swap_bytes_2((unsigned char *)&_accelz);
-    swap_bytes_2((unsigned char *)&_acceltemp);
+    temp = _accelx;
+    swap_bytes_2((unsigned char *)&temp);
+    [stream appendBytes:&temp length:2];
 
-    [stream appendBytes:&_accelx length:2];
-    [stream appendBytes:&_accely length:2];
-    [stream appendBytes:&_accelz length:2];
-    [stream appendBytes:&_acceltemp length:2];
+    temp = _accely;
+    swap_bytes_2((unsigned char *)&temp);
+    [stream appendBytes:&temp length:2];
+
+    temp = _accelz;
+    swap_bytes_2((unsigned char *)&temp);
+    [stream appendBytes:&temp length:2];
+    
+    temp = _acceltemp;
+    swap_bytes_2((unsigned char *)&temp);
+    [stream appendBytes:&temp length:2];
+
     [stream appendBytes:&_acceldetect length:1];
 
     return stream;
 }
+
+- (NSString *)describeStatus {
+    NSMutableString *status = [[NSMutableString alloc] init];
+    
+    [status appendString:[NSString stringWithFormat:@"Acceleration x     : %d\n", self.accelx]];
+    [status appendString:[NSString stringWithFormat:@"Acceleration y     : %d\n", self.accely]];
+    [status appendString:[NSString stringWithFormat:@"Acceleration z     : %d\n", self.accelz]];
+    [status appendString:[NSString stringWithFormat:@"Acceleration Temp  : %d\n", self.acceltemp]];
+    [status appendString:[NSString stringWithFormat:@"Acceleration Detect: %d\n", self.acceldetect]];
+    return (NSString *)status;
+}
+
 
 - (NSString *)description {
     return @"Acceleration Sensor";

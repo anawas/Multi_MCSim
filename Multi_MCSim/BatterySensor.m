@@ -41,6 +41,14 @@
     return (NSData *)stream;
 }
 
+- (NSString *)describeStatus {
+    NSMutableString *status = [[NSMutableString alloc] init];
+    [status appendString:[NSString stringWithFormat:@"Voltage: %f\n", self.voltage]];
+    [status appendString:[NSString stringWithFormat:@"Charge : %f %%\n", self.charge]];
+    return (NSString *)status;
+}
+
+
 - (NSString *)description {
     return @"Battery Sensor";
 }

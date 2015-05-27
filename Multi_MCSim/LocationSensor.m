@@ -63,6 +63,15 @@
     return stream;
 }
 
+- (NSString *)describeStatus {
+    NSMutableString *status = [[NSMutableString alloc] init];
+    
+    [status appendString:[NSString stringWithFormat:@"Latitude  : %f\n", self.latitude]];
+    [status appendString:[NSString stringWithFormat:@"Longitude : %f\n", self.longitude]];
+    return (NSString *)status;
+}
+
+
 - (NSString *)description {
     return @"Location Sensor";
 }
