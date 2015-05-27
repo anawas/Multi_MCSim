@@ -13,5 +13,6 @@
 
 void swap_bytes_2(unsigned char *buffer);
 void swap_bytes_4(unsigned char *buffer);
+void swap_bytes_8(unsigned char *buffer);
 
 #endif /* defined(__Multi_MCSim__byteswap__) */

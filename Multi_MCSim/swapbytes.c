@@ -27,3 +27,15 @@ void swap_bytes_4(unsigned char *buffer) {
     buffer[1] = buffer[2];
     buffer[2] = temp;
 };
+
+void swap_bytes_8(unsigned char *buffer) {
+    unsigned char temp;
+    
+    temp = buffer[0];
+    buffer[0] = buffer[3];
+    buffer[3] = temp;
+    
+    temp = buffer[1];
+    buffer[1] = buffer[2];
+    buffer[2] = temp;
+};
