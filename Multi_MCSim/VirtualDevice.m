@@ -89,7 +89,7 @@ enum {
                                                        repeats:YES];
 }
 - (void)createMeasurement {
-    NSInteger timeCost = 0;
+    _timeCost = 0;
     long temp;
     
     NSMutableData *data = [[NSMutableData alloc] init];
@@ -117,23 +117,57 @@ enum {
     
     self.lastUpdate = [NSDate date];
     [data appendData:[self byteStreamFromDate:self.lastUpdate]];
-    
+
     [data appendData:[_sensorList[BATTERYSENSOR] readDataStream]];
     [data appendData:[_sensorList[ACCELERATIONSENSOR] readDataStream]];
 
     [data appendBytes:&_status length:1];
-    timeCost = arc4random_uniform(10000) + 20000;
-    temp = timeCost;
+    _timeCost = arc4random_uniform(10000) + 20000;
+    temp = _timeCost;
     swap_bytes_4((unsigned char *)&temp);
     [data appendBytes:&temp length:4];
     
     [data appendData:[_sensorList[GSMSENSOR] readDataStream]];
     
     [udpSocket sendData:data toHost:self.serverUrl port:self.port withTimeout:-1 tag:_msgId];
-    //[data writeToFile:@"/Users/andreas/WualaCloud/Development/platformtesting/multimcsim.dat" atomically:YES];
+    [self createLogEntry];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"DeviceUpdatedNotification" object:self];
     data = nil;
+}
+
+- (void)createLogEntry {
+    NSMutableString *entry = [[NSMutableString alloc] init];
+    
+    [entry appendString:[NSString stringWithFormat:@"GSM ID     : %@\n", self.deviceName]];
+    [entry appendString:[NSString stringWithFormat:@"Message ID : %ld\n", self.msgId]];
+    [entry appendString:[NSString stringWithFormat:@"Last Udpate: %@\n", self.lastUpdate]];
+    [entry appendString:[NSString stringWithFormat:@"Time Cost  : %ld\n", (long)self.timeCost]];
+    [entry appendString:@"---------------------------------------------\n"];
+    [entry appendString:[NSString stringWithFormat:@"%@\n", [self.sensorList[LOCATIONSENSOR] description]]];
+    [entry appendString:[NSString stringWithFormat:@"%@\n",[self.sensorList[LOCATIONSENSOR] describeStatus]]];
+    [entry appendString:@"---------------------------------------------\n"];
+    [entry appendString:[NSString stringWithFormat:@"%@\n", [self.sensorList[BATTERYSENSOR] description]]];
+    [entry appendString:[NSString stringWithFormat:@"%@\n", [self.sensorList[BATTERYSENSOR] describeStatus]]];
+    [entry appendString:@"---------------------------------------------\n"];
+    [entry appendString:[NSString stringWithFormat:@"%@\n", [self.sensorList[ACCELERATIONSENSOR] description]]];
+    [entry appendString:[NSString stringWithFormat:@"%@\n", [self.sensorList[ACCELERATIONSENSOR] describeStatus]]];
+    [entry appendString:@"---------------------------------------------\n"];
+    [entry appendString:[NSString stringWithFormat:@"%@\n", [self.sensorList[GSMSENSOR] description]]];
+    [entry appendString:[NSString stringWithFormat:@"%@\n", [self.sensorList[GSMSENSOR] describeStatus]]];
+    [entry appendString:@"=============================================\n"];
+    
+    NSFileHandle *aFileHandle;
+    NSString *aFile;
+    
+    aFile = @"/Users/andreas/WualaCloud/Development/platformtesting/multimcsim.log"; //setting the file to write to
+    aFile = [aFile stringByExpandingTildeInPath];
+    
+    aFileHandle = [NSFileHandle fileHandleForWritingAtPath:aFile]; //telling aFilehandle what file write to
+    [aFileHandle truncateFileAtOffset:[aFileHandle seekToEndOfFile]]; //setting aFileHandle to write at the end of the file
+    
+    [aFileHandle writeData:[entry dataUsingEncoding:NSUTF8StringEncoding]]; //actually write the data
+    [aFileHandle closeFile];
 }
 
 - (NSData *)byteStreamFromDate:(NSDate *)theDate {
