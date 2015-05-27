@@ -51,11 +51,11 @@
     self.remoteHostUrlText.delegate = self;
     
     // the ip of our ec2 instance
-    self.remoteHostUrlText.stringValue = @"52.24.24.169";
+    self.remoteHostUrlText.stringValue = @"52.24.130.149";
     useLocalHost = true;
     self.targetHostUrl = @"localhost";
     self.targetPort = 47053;
-    self.portNumberText.stringValue = [NSString stringWithFormat:@"%ld", (long)self.targetPort];
+    self.portNumberText.stringValue = [NSString stringWithFormat:@"%ld", (long)_targetPort];
     [self toggleServerControlState];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -71,10 +71,25 @@
 
 - (IBAction)menuItemSelected:(id)sender {
     long itemTagSelected = [(NSMenuItem *)sender tag];
-
+    int i;
+    
     switch (itemTagSelected) {
         case 1:
-            NSLog(@"Creating a stress test");
+            for (i = 0; i < 20; i++) {
+                long deviceNr = rand();
+                VirtualDevice *newDevice = [self createVirtualDeviceWithName:[NSString stringWithFormat:@"%010ld", deviceNr]
+                                                                   andNumber:deviceNr
+                                                              updateInterval:1
+                                                               andMultiplier:MULTIPLIER_SECONDS];
+                
+                // now we add it to our pool
+                [self.virtualDevicePool addObject:newDevice];
+                
+                [newDevice startMeasuring];
+                newDevice.deviceIsRunning = YES;
+            }
+            [_devicePoolTable reloadData];
+            [self savePrefernces];
             break;
         case 2:
             NSLog(@"Cleaning up stress test");
@@ -83,6 +98,17 @@
         default:
             break;
     }
+}
+
+-(void)savePrefernces {
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *devicelist = [NSMutableArray arrayWithCapacity:30];
+    
+    for (VirtualDevice *device in self.virtualDevicePool) {
+        [devicelist addObject:[device deviceName]];
+    }
+    
+    [defaults setObject:(NSArray *)devicelist forKey:@"devicepool"];
 }
 
 - (IBAction)segmentedControlClicked:(id)sender {
@@ -100,6 +126,7 @@
         case 2:
             NSLog(@"Advanced option clicked");
             [self.stressTestPopup popUpMenuPositioningItem:nil atLocation:[NSEvent mouseLocation] inView:nil];
+            
              
             break;
         default:
@@ -218,25 +245,6 @@
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication {
     return YES;
-}
-
-- (VirtualDevice *)createVirtualDeviceWithNumber:(NSInteger)deviceNr {
-    
-    VirtualDevice *newDevice = [[VirtualDevice alloc] initWithDeviceName:self.virtualMCView.deviceName.stringValue andNumber:deviceNr];
-    newDevice.serverUrl = self.remoteHostUrlText.stringValue;
-    newDevice.port = self.remotePortNumberText.integerValue;
-    int multiplier = 0;
-    if ([self.virtualMCView.timeFrame.selectedItem.title compare:@"Seconds"] == 0) {
-        multiplier = MULTIPLIER_SECONDS;
-    } else if ([self.virtualMCView.timeFrame.selectedItem.title compare:@"Minutes"] == 0) {
-        multiplier = MULTIPLIER_MINUTES;
-    } else {
-        multiplier= MULTIPLIER_HOURS;
-    }
-    
-    [newDevice setUpdateInterval:self.virtualMCView.timeIntervalText.integerValue withMutliplier:multiplier];
-    [newDevice startSocketAtPort:self.targetPort andUrl:self.targetHostUrl];
-    return newDevice;
 }
 
 

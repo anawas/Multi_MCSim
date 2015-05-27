@@ -23,7 +23,7 @@ enum intervalMultiplier {
 @property (strong) NSString *deviceName;
 @property (strong) NSArray *sensorList;
 @property NSInteger updateInterval;
-@property NSInteger deviceNumber;
+@property long deviceNumber;
 @property NSInteger msgId;
 @property short status;
 @property BOOL deviceIsRunning;

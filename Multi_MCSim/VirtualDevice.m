@@ -19,7 +19,7 @@ enum {
     
 
 @implementation VirtualDevice
-- (id)initWithDeviceName:(NSString *)devName andNumber:(NSInteger)devNumber {
+- (id)initWithDeviceName:(NSString *)devName andNumber:(long)devNumber {
     self = [super init];
     
     if (self) {
@@ -90,7 +90,7 @@ enum {
 }
 - (void)createMeasurement {
     NSInteger timeCost = 0;
-    NSInteger temp;
+    long temp;
     
     NSMutableData *data = [[NSMutableData alloc] init];
     _msgId++;
@@ -102,8 +102,10 @@ enum {
     // better use a temp value.
     temp = _deviceNumber;
     swap_bytes_4((unsigned char *)&temp);
+    
     // The new protocol assume a double 4 byte number, we just double the input
-    [data appendBytes:&_deviceNumber length:4];
+    //[data appendBytes:&_deviceNumber length:4];
+    [data appendBytes:&temp length:4];
     [data appendBytes:&temp length:4];
     [data appendBytes:&_status length:1];
     
