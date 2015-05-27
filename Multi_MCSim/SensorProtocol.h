@@ -20,6 +20,7 @@ union {
 @protocol SensorProtocol
 - (void)generateNewData;
 - (NSData *)readDataStream;
+- (NSString *)describeStatus;
 @end
 
 #endif
