@@ -26,6 +26,7 @@ enum intervalMultiplier {
 @property long deviceNumber;
 @property NSInteger msgId;
 @property short status;
+@property unsigned char impactDetector;
 @property NSInteger timeCost;
 @property BOOL deviceIsRunning;
 @property NSDate *lastUpdate;

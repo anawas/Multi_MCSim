@@ -121,7 +121,10 @@ enum {
     [data appendData:[_sensorList[BATTERYSENSOR] readDataStream]];
     [data appendData:[_sensorList[ACCELERATIONSENSOR] readDataStream]];
 
-    [data appendBytes:&_status length:1];
+    // this mimics the impact detector
+    _impactDetector = (unsigned char)arc4random_uniform(100);
+    [data appendBytes:&_impactDetector length:1];
+    
     _timeCost = arc4random_uniform(10000) + 20000;
     temp = _timeCost;
     swap_bytes_4((unsigned char *)&temp);
@@ -143,6 +146,7 @@ enum {
     [entry appendString:[NSString stringWithFormat:@"Message ID : %ld\n", self.msgId]];
     [entry appendString:[NSString stringWithFormat:@"Last Udpate: %@\n", self.lastUpdate]];
     [entry appendString:[NSString stringWithFormat:@"Time Cost  : %ld\n", (long)self.timeCost]];
+    [entry appendString:[NSString stringWithFormat:@"Impacts    : %d\n", (unsigned char)self.impactDetector]];
     [entry appendString:@"---------------------------------------------\n"];
     [entry appendString:[NSString stringWithFormat:@"%@\n", [self.sensorList[LOCATIONSENSOR] description]]];
     [entry appendString:[NSString stringWithFormat:@"%@\n",[self.sensorList[LOCATIONSENSOR] describeStatus]]];
