@@ -24,7 +24,7 @@
 @property (weak) IBOutlet NSTextField *remoteHostUrlText;
 @property (weak) IBOutlet NSTextField *remotePortNumberText;
 @property (weak) NSString *targetHostUrl;
-@property NSInteger targetPort;
+@property        NSInteger targetPort;
 - (IBAction)menuItemSelected:(id)sender;
 
 - (IBAction)segmentedControlClicked:(id)sender;

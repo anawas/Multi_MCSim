@@ -185,7 +185,7 @@
                                         andNumber:deviceNr
                                    updateInterval:self.virtualMCView.timeIntervalText.integerValue
                                     andMultiplier:multiplier];
-    
+    newDevice.port = self.targetPort;
 
     // now we add it to our pool
     [self.virtualDevicePool addObject:newDevice];
@@ -212,6 +212,7 @@
 
     switch ([postingObject tag]) {
         case 1001:
+            self.targetPort = self.portNumberText.integerValue;
             // the user edited the localhost port
             // --> update port in devices
             break;
