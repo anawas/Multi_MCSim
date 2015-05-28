@@ -200,7 +200,7 @@ enum {
     NSMutableString *desc = [[NSMutableString alloc] init];
     
     [desc appendFormat:@"\nDevice name: %@\n", self.deviceName];
-    [desc appendFormat:@"  sending to %@\n", self.serverUrl];
+    [desc appendFormat:@"  sending to %@, port %ld\n", self.serverUrl, (long)self.port];
     //[desc appendFormat:@"  Virtual sensors: %@\n", self.builtinSensors];
     
     return (NSString *)desc;
