@@ -223,6 +223,8 @@
             // the user edited the api key.
             // --> update api in devices
             break;
+        case 1010:
+            self.targetPort = self.remotePortNumberText.integerValue;
             
         default:
             break;
