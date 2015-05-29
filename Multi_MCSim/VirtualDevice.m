@@ -1,3 +1,5 @@
+
+
 //
 //  VirtualDevice.m
 //  Multi_MCSim
@@ -16,7 +18,7 @@ enum {
     ACCELERATIONSENSOR,
     GSMSENSOR
 } sensorindex;
-    
+
 
 @implementation VirtualDevice
 - (id)initWithDeviceName:(NSString *)devName andNumber:(long)devNumber {
@@ -53,7 +55,7 @@ enum {
         return;
     }
     self.serverUrl = addr;
-
+    
     
     if (thePort <= 0 || thePort > 65535)
     {
@@ -117,10 +119,10 @@ enum {
     
     self.lastUpdate = [NSDate date];
     [data appendData:[self byteStreamFromDate:self.lastUpdate]];
-
+    
     [data appendData:[_sensorList[BATTERYSENSOR] readDataStream]];
     [data appendData:[_sensorList[ACCELERATIONSENSOR] readDataStream]];
-
+    
     // this mimics the impact detector
     _impactDetector = (unsigned char)arc4random_uniform(100);
     [data appendBytes:&_impactDetector length:1];
@@ -222,19 +224,41 @@ enum {
       fromAddress:(NSData *)address
 withFilterContext:(id)filterContext
 {
-    NSString *msg = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    if (msg)
-    {
-        NSLog(@"RECV: %@", msg);
-    }
-    else
-    {
+    if (data.length > 0) {
+        NSMutableString *message = [[NSMutableString alloc] init];
+        
+        unsigned char *buffer = calloc(8, sizeof(unsigned char));
+        [data getBytes:buffer length:data.length];
+        
+        [message appendString: @"RECV: "];
+        for (int i = 0; i < data.length; i++) {
+            [message appendString:[NSString stringWithFormat:@"%d", (unsigned char)(buffer[i])]];
+            if (i < data.length -1)[message appendString:@","];
+        }
+        NSLog(@"%@", message);
+        free(buffer);
+    } else {
         NSString *host = nil;
         uint16_t port = 0;
         [GCDAsyncUdpSocket getHost:&host port:&port fromAddress:address];
         
         NSLog(@"RECV: Unknown message from: %@:%hu", host, port);
     }
+    
+    /*
+     NSString *msg = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+     if (msg)
+     {
+     }
+     else
+     {
+     NSString *host = nil;
+     uint16_t port = 0;
+     [GCDAsyncUdpSocket getHost:&host port:&port fromAddress:address];
+     
+     NSLog(@"RECV: Unknown message from: %@:%hu", host, port);
+     }
+     */
 }
 
 

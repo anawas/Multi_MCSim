@@ -43,7 +43,10 @@
     }
 
     if ([columnTitle isEqualToString:@"Last Update"]) {
-        retValue =  [device.lastUpdate descriptionWithCalendarFormat:@"%d.%m.%Y %H:%M:%S" timeZone:nil locale:[NSLocale currentLocale]];
+        NSMutableString *message = [[NSMutableString alloc] init];
+        [message appendString:[device.lastUpdate descriptionWithCalendarFormat:@"%d.%m.%Y %H:%M:%S" timeZone:nil locale:[NSLocale currentLocale]]];
+        [message appendString:[NSString stringWithFormat:@" / Msg ID = %ld", device.msgId]];
+        retValue = (NSString *)message;
     }
 
     return retValue;
