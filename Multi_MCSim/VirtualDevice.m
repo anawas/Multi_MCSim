@@ -230,18 +230,19 @@ withFilterContext:(id)filterContext
         unsigned char *buffer = calloc(8, sizeof(unsigned char));
         [data getBytes:buffer length:data.length];
         
-        [message appendString: @"RECV: "];
         for (int i = 0; i < data.length; i++) {
             [message appendString:[NSString stringWithFormat:@"%d", (unsigned char)(buffer[i])]];
             if (i < data.length -1)[message appendString:@","];
         }
-        NSLog(@"%@", message);
+        self.returnMessage = message;
+        NSLog(@"RECV: %@", _returnMessage);
+
         free(buffer);
     } else {
         NSString *host = nil;
         uint16_t port = 0;
         [GCDAsyncUdpSocket getHost:&host port:&port fromAddress:address];
-        
+        self.returnMessage = @"";
         NSLog(@"RECV: Unknown message from: %@:%hu", host, port);
     }
     

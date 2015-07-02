@@ -34,6 +34,7 @@ enum intervalMultiplier {
 @property (strong) NSString *serverUrl;
 @property NSInteger port;
 @property (weak) NSTimer *deviceTimer;
+@property NSString *returnMessage;
 
 
 - (id)initWithDeviceName:(NSString *)devName andNumber:(NSInteger)devNumber;

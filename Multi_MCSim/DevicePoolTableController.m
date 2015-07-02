@@ -48,6 +48,10 @@
         [message appendString:[NSString stringWithFormat:@" / Msg ID = %ld", device.msgId]];
         retValue = (NSString *)message;
     }
+    
+    if ([columnTitle isEqualToString:@"Return Value"]) {
+        retValue = device.returnMessage;
+    }
 
     return retValue;
 }
