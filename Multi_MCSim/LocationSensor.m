@@ -42,9 +42,18 @@
 }
 
 - (void)generateNewData {
+    /*
+    _latitude = ((float)arc4random()/(float)RAND_MAX/2.0) * 180.0 - 90.0;
+    _longitude = ((float)arc4random()/(float)RAND_MAX/2.0) * 360.0 - 180.0;
+    */
     
+    _longitude -= 0.01;
+    _latitude += 0.01;
+    /*
     _longitude += [self getRandomValue];
     _latitude += [self getRandomValue];
+     */
+    NSLog(@"Location Sensor -- %@", [self describeStatus]);
 }
 
 
@@ -52,12 +61,12 @@
     NSMutableData *stream = [[NSMutableData alloc] init];
         
     // -U is a union defined in SensorProtocol
-    _u.fvalue = self.latitude;
+    _u.fvalue = self.longitude;
     
     swap_bytes_4(_u.bstream);
     [stream appendBytes:_u.bstream length:4];
 
-    _u.fvalue = self.longitude;
+    _u.fvalue = self.latitude;
     swap_bytes_4(_u.bstream);
     [stream appendBytes:_u.bstream length:4];
     return stream;
@@ -66,8 +75,7 @@
 - (NSString *)describeStatus {
     NSMutableString *status = [[NSMutableString alloc] init];
     
-    [status appendString:[NSString stringWithFormat:@"Latitude  : %f\n", self.latitude]];
-    [status appendString:[NSString stringWithFormat:@"Longitude : %f\n", self.longitude]];
+    [status appendString:[NSString stringWithFormat:@"LatLon  : %f, %f\n", self.latitude, self.longitude]];
     return (NSString *)status;
 }
 

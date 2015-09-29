@@ -29,13 +29,13 @@
     if (((float)arc4random()/(float)RAND_MAX) >= 0.5) _accelx = -_accelx;
     
     _accely = (short)arc4random_uniform(1000);
-    if (((float)arc4random()/(float)RAND_MAX) >= 0.5) _accelx = -_accely;
+    if (((float)arc4random()/(float)RAND_MAX) >= 0.5) _accely= -_accely;
     
     _accelz = (short)arc4random_uniform(1000);
-    if (((float)arc4random()/(float)RAND_MAX) >= 0.5) _accelx = -_accelz;
+    if (((float)arc4random()/(float)RAND_MAX) >= 0.5) _accelz = -_accelz;
     
     _acceltemp = (short)arc4random_uniform(1000);
-    if (((float)arc4random()/(float)RAND_MAX) >= 0.5) _accelx = -_acceltemp;
+    if (((float)arc4random()/(float)RAND_MAX) >= 0.5) _acceltemp = -_acceltemp;
 
     _acceldetect = (unsigned char)arc4random_uniform(200);
 

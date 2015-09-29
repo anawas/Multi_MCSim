@@ -26,6 +26,9 @@ enum intervalMultiplier {
 @property long deviceNumber;
 @property NSInteger msgId;
 @property short status;
+@property short protversion;
+@property short hwstatus;
+@property BOOL hasGpsSensor;
 @property unsigned char impactDetector;
 @property NSInteger timeCost;
 @property BOOL deviceIsRunning;
@@ -36,8 +39,8 @@ enum intervalMultiplier {
 @property (weak) NSTimer *deviceTimer;
 @property NSString *returnMessage;
 
+- (id)initWithDeviceName:(NSString *)devName number:(NSInteger)devNumber andProtocol:(NSInteger)version;
 
-- (id)initWithDeviceName:(NSString *)devName andNumber:(NSInteger)devNumber;
 - (void)startSocketAtPort:(NSInteger)thePort andUrl:(NSString *)addr;
 - (void)setUpdateInterval:(NSInteger)updateInterval withMutliplier:(NSInteger)multiplier;
 - (void)startMeasuring;

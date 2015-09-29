@@ -13,6 +13,7 @@
 #import "AccelerationSensor.h"
 #import "LocationSensor.h"
 #import "GSMSensor.h"
+#import "GPSSensor.h"
 #import "swapbytes.h"
 
 #endif

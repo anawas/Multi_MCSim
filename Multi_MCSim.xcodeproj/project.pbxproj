@@ -28,6 +28,7 @@
 		E14D1F2F1ADF9EC100C0C69A /* AccelerationSensor.m in Sources */ = {isa = PBXBuildFile; fileRef = E14D1F2E1ADF9EC100C0C69A /* AccelerationSensor.m */; };
 		E14D1F321ADFA30D00C0C69A /* GSMSensor.m in Sources */ = {isa = PBXBuildFile; fileRef = E14D1F311ADFA30D00C0C69A /* GSMSensor.m */; };
 		E16B6DBB1AE0F73100462BF7 /* swapbytes.c in Sources */ = {isa = PBXBuildFile; fileRef = E16B6DB91AE0F73100462BF7 /* swapbytes.c */; };
+		E1A5F4311BBA80C800E48A9C /* GPSSensor.m in Sources */ = {isa = PBXBuildFile; fileRef = E1A5F4301BBA80C800E48A9C /* GPSSensor.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,8 @@
 		E14D1F361ADFD15700C0C69A /* SensorImports.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SensorImports.h; sourceTree = "<group>"; };
 		E16B6DB91AE0F73100462BF7 /* swapbytes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = swapbytes.c; sourceTree = "<group>"; };
 		E16B6DBA1AE0F73100462BF7 /* swapbytes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = swapbytes.h; sourceTree = "<group>"; };
+		E1A5F42F1BBA80C800E48A9C /* GPSSensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPSSensor.h; sourceTree = "<group>"; };
+		E1A5F4301BBA80C800E48A9C /* GPSSensor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPSSensor.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,6 +222,8 @@
 				E14D1F301ADFA30D00C0C69A /* GSMSensor.h */,
 				E14D1F311ADFA30D00C0C69A /* GSMSensor.m */,
 				E14D1F361ADFD15700C0C69A /* SensorImports.h */,
+				E1A5F42F1BBA80C800E48A9C /* GPSSensor.h */,
+				E1A5F4301BBA80C800E48A9C /* GPSSensor.m */,
 			);
 			name = SensorClasses;
 			sourceTree = "<group>";
@@ -267,7 +272,7 @@
 		DBAB7E2819C9A069009BC8D4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = Phandroo;
 				TargetAttributes = {
 					DBAB7E2F19C9A069009BC8D4 = {
@@ -330,6 +335,7 @@
 				DB45296C19CBEB420043A5E5 /* VirtualDevice.m in Sources */,
 				E14D1F2F1ADF9EC100C0C69A /* AccelerationSensor.m in Sources */,
 				DBAB7E4719C9A069009BC8D4 /* AppDelegate.m in Sources */,
+				E1A5F4311BBA80C800E48A9C /* GPSSensor.m in Sources */,
 				DB2243EF19CC77F8001D06A5 /* DevicePoolTableController.m in Sources */,
 				E16B6DBB1AE0F73100462BF7 /* swapbytes.c in Sources */,
 				2DB511C919D1A62D00A573F9 /* AsyncPost.m in Sources */,
@@ -411,6 +417,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -474,6 +481,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Multi_MCSim/Multi_MCSim-Prefix.pch";
 				INFOPLIST_FILE = "Multi_MCSim/Multi_MCSim-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.phandroo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -490,6 +498,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Multi_MCSim/Multi_MCSim-Prefix.pch";
 				INFOPLIST_FILE = "Multi_MCSim/Multi_MCSim-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.phandroo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -512,6 +521,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Multi_MCSimTests/Multi_MCSimTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.phandroo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -530,6 +540,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Multi_MCSim/Multi_MCSim-Prefix.pch";
 				INFOPLIST_FILE = "Multi_MCSimTests/Multi_MCSimTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.phandroo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;

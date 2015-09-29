@@ -13,4 +13,7 @@
 @property float latitude;
 @property float longitude;
 
+- (id)init;
+- (id)initWithLongitude:(float)longitude andLatitude:(float)latitude;
+
 @end

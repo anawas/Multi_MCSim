@@ -16,12 +16,14 @@ enum {
     LOCATIONSENSOR = 0,
     BATTERYSENSOR,
     ACCELERATIONSENSOR,
-    GSMSENSOR
+    GSMSENSOR,
+    GPSSENSOR
 } sensorindex;
 
 
 @implementation VirtualDevice
-- (id)initWithDeviceName:(NSString *)devName andNumber:(long)devNumber {
+
+- (id)initWithDeviceName:(NSString *)devName number:(NSInteger)devNumber andProtocol:(NSInteger)version {
     self = [super init];
     
     if (self) {
@@ -29,12 +31,20 @@ enum {
         self.deviceNumber = [devName integerValue];
         self.msgId = 0;
         self.status = 1;
+        self.protversion = version;
+        self.hwstatus = 0x00;
+        self.hasGpsSensor = false;
         AccelerationSensor *accSens = [[AccelerationSensor alloc] init];
         BatterySensor *battSens = [[BatterySensor alloc] init];
-        LocationSensor *locSensor = [[LocationSensor alloc] init];
-        GSMSensor *gsmSensor = [[GSMSensor alloc] init];
         
-        self.sensorList = [[NSArray alloc] initWithObjects:locSensor, battSens, accSens, gsmSensor, nil];
+        // we start somewhere near Schweizerhalle
+        LocationSensor *locSensor = [[LocationSensor alloc] initWithLongitude: 8.545117
+                                                                  andLatitude: 47.367069];
+        GSMSensor *gsmSensor = [[GSMSensor alloc] init];
+        GPSSensor *gpsSensor = [[GPSSensor alloc] initWithLongitude:8.545117
+                                                        andLatitude:47.367069];
+        
+        self.sensorList = [[NSArray alloc] initWithObjects:locSensor, battSens, accSens, gsmSensor, gpsSensor, nil];
         
         udpSocket = [[GCDAsyncUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
         self.lastUpdate = [NSDate date];
@@ -42,6 +52,7 @@ enum {
     }
     return self;
 }
+
 
 - (void) dealloc {
     ;
@@ -109,11 +120,25 @@ enum {
     //[data appendBytes:&_deviceNumber length:4];
     [data appendBytes:&temp length:4];
     [data appendBytes:&temp length:4];
-    [data appendBytes:&_status length:1];
+    
+    if (self.protversion == 2) {
+        self.status |= 0x80;
+        [data appendBytes:&_status length:1];
+        [data appendBytes:&_protversion length:1];
+
+        if (self.hasGpsSensor) {
+            // the stream has GPS data
+            self.hwstatus |= 0x01;
+        }
+        [data appendBytes:&_hwstatus length:1];
+    } else {
+        [data appendBytes:&_status length:1];
+    }
     
     temp = _msgId;
     swap_bytes_4((unsigned char *)&temp);
     [data appendBytes:&temp length:4];
+    
     NSData *dummy = [_sensorList[LOCATIONSENSOR] readDataStream];
     [data appendData: dummy];
     
@@ -134,6 +159,10 @@ enum {
     
     [data appendData:[_sensorList[GSMSENSOR] readDataStream]];
     
+    if (self.hwstatus & 0x01) {
+        [data appendData:[_sensorList[GPSSENSOR] readDataStream]];
+    }
+
     [udpSocket sendData:data toHost:self.serverUrl port:self.port withTimeout:-1 tag:_msgId];
     [self createLogEntry];
     
@@ -161,12 +190,15 @@ enum {
     [entry appendString:@"---------------------------------------------\n"];
     [entry appendString:[NSString stringWithFormat:@"%@\n", [self.sensorList[GSMSENSOR] description]]];
     [entry appendString:[NSString stringWithFormat:@"%@\n", [self.sensorList[GSMSENSOR] describeStatus]]];
+    [entry appendString:@"---------------------------------------------\n"];
+    [entry appendString:[NSString stringWithFormat:@"%@\n", [self.sensorList[GPSSENSOR] description]]];
+    [entry appendString:[NSString stringWithFormat:@"%@\n", [self.sensorList[GPSSENSOR] describeStatus]]];
     [entry appendString:@"=============================================\n"];
     
     NSFileHandle *aFileHandle;
     NSString *aFile;
     
-    aFile = @"/Users/andreas/WualaCloud/Development/platformtesting/multimcsim.log"; //setting the file to write to
+    aFile = @"/Users/andreas/SecureSafe/Private SecureSafe/Development/platformtesting/multimcsim.log"; //setting the file to write to
     aFile = [aFile stringByExpandingTildeInPath];
     
     aFileHandle = [NSFileHandle fileHandleForWritingAtPath:aFile]; //telling aFilehandle what file write to

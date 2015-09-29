@@ -33,7 +33,7 @@
     [_virtualMCView loadView];
     
     NSRect dialogBounds = NSMakeRect(self.window.frame.origin.x, self.window.frame.origin.y, self.virtualMCView.view.bounds.size.width, self.virtualMCView.view.bounds.size.height);
-
+    
     // we create a simple window without a red close button and set this class
     // as window delegate. Because there is no close button wecannot
     // respond to windowShoudlClose: but must listen to NSWindowsWillCloseNotification
@@ -59,9 +59,9 @@
     [self toggleServerControlState];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-            selector:@selector(aDeviceUpdated:)
-            name:@"DeviceUpdatedNotification"
-            object:nil];
+                                             selector:@selector(aDeviceUpdated:)
+                                                 name:@"DeviceUpdatedNotification"
+                                               object:nil];
 }
 
 - (void)aDeviceUpdated:(NSNotification *)notification {
@@ -127,7 +127,7 @@
             NSLog(@"Advanced option clicked");
             [self.stressTestPopup popUpMenuPositioningItem:nil atLocation:[NSEvent mouseLocation] inView:nil];
             
-             
+            
             break;
         default:
             break;
@@ -180,16 +180,16 @@
     } else {
         multiplier= MULTIPLIER_HOURS;
     }
-
+    
     newDevice = [self createVirtualDeviceWithName:self.virtualMCView.deviceName.stringValue
                                         andNumber:deviceNr
                                    updateInterval:self.virtualMCView.timeIntervalText.integerValue
                                     andMultiplier:multiplier];
     newDevice.port = self.targetPort;
-
+    
     // now we add it to our pool
     [self.virtualDevicePool addObject:newDevice];
-
+    
     [newDevice startMeasuring];
     newDevice.deviceIsRunning = YES;
     NSLog(@"%@", [newDevice description]);
@@ -209,7 +209,7 @@
  */
 - (void)controlTextDidEndEditing:(NSNotification *)aNotification {
     NSControl *postingObject = [aNotification object]; // the object that posted the notification
-
+    
     switch ([postingObject tag]) {
         case 1001:
             self.targetPort = self.portNumberText.integerValue;
@@ -236,7 +236,7 @@
  * Private Methods
  */
 - (void)toggleServerControlState {
-
+    
     BOOL enabled = [_remoteHostUrlText isEnabled];
     
     [_remoteHostUrlText setEnabled:!enabled];
@@ -257,15 +257,15 @@
                                  andMultiplier:(NSInteger)multiplier
 {
     VirtualDevice *newDevice = [[VirtualDevice alloc] initWithDeviceName:deviceName
-                                                               andNumber:number];
+                                                                  number:number
+                                                             andProtocol:self.virtualMCView.protocolVersion];
     newDevice.serverUrl = self.remoteHostUrlText.stringValue;
     newDevice.port = self.remotePortNumberText.integerValue;
     
     [newDevice setUpdateInterval:self.virtualMCView.timeIntervalText.integerValue withMutliplier:multiplier];
     [newDevice startSocketAtPort:self.targetPort andUrl:self.targetHostUrl];
+    newDevice.hasGpsSensor = self.virtualMCView.hasGps;
     return newDevice;
 }
-
-
 
 @end

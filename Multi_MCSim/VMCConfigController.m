@@ -21,6 +21,8 @@
     if (self) {
         [self.deviceName setStringValue:@"Test"];
         [self.deviceName setDelegate:self];
+        self.protocolVersion = 1;
+        self.hasGps = true;
     }
     return self;
 }
@@ -41,6 +43,24 @@
     self.deviceName.stringValue = [[NSString alloc] initWithFormat:@"%08d", arc4random_uniform(10000000)+21000000];
 }
 
+- (IBAction)protocolVersionChanged:(id)sender {
+    NSMatrix *theMatrix = (NSMatrix *)sender;
+    if ([[[theMatrix selectedCell] title] isEqualToString:@"V 1.0"]) {
+        self.protocolVersion = 1;
+    } else {
+        self.protocolVersion = 2;
+    }
+    NSLog(@"Stream version set to %d", self.protocolVersion);
+}
+
+- (IBAction)hasGpsChanged:(id)sender {
+    
+    if ([sender state] == NSOnState) {
+        self.hasGps = NSOnState;
+    } else {
+        self.hasGps = NSOffState;
+    }
+}
 
 - (NSDictionary *)retrieveBuiltinSensors {
     NSMutableDictionary *sensors = [[NSMutableDictionary alloc] initWithCapacity:6];
