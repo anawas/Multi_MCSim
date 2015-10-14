@@ -35,10 +35,10 @@
     }
 
     if ([columnTitle isEqualToString:@"Status"]) {
-        if (device.deviceIsRunning) {
-            retValue = @"running";
+        if (device.deviceIsDetached) {
+            retValue = @"detached";
         } else {
-            retValue = @"stopped";
+            retValue = @"attached";
         }
     }
 

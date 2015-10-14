@@ -10,7 +10,7 @@
 #import "VMCConfigController.h"
 #import "DevicePoolTableController.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSTextFieldDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSTextFieldDelegate, NSTableViewDelegate>
 
 @property (weak) IBOutlet NSTableView *devicePoolTable;
 @property (assign) IBOutlet NSWindow *window;

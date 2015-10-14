@@ -48,6 +48,7 @@
     self.poolTableDatasource.devicePool = self.virtualDevicePool;
     
     self.devicePoolTable.dataSource = self.poolTableDatasource;
+    self.devicePoolTable.delegate = self;
     self.remoteHostUrlText.delegate = self;
     
     // the ip of our ec2 instance
@@ -230,6 +231,19 @@
             break;
     }
     NSLog(@"posted by: %@ (tag: %ld)", postingObject, [postingObject tag]);
+}
+
+/*
+ * NSTableViewDelegate
+ */
+- (BOOL)tableView:(NSTableView *)aTableView shouldEditTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex {
+    VirtualDevice *theDevice = [self.virtualDevicePool objectAtIndex:(long)rowIndex];
+    
+    // monitoring the detachment of the device is only possible for protocol version 2.
+    if (theDevice.protversion == 2) {
+        [theDevice switchDetachment];
+    }
+    return NO;
 }
 
 /*
