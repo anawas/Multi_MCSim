@@ -45,14 +45,14 @@
     /*
     _latitude = ((float)arc4random()/(float)RAND_MAX/2.0) * 180.0 - 90.0;
     _longitude = ((float)arc4random()/(float)RAND_MAX/2.0) * 360.0 - 180.0;
-    */
     
     _longitude -= 0.01;
     _latitude += 0.01;
-    /*
-    _longitude += [self getRandomValue];
-    _latitude += [self getRandomValue];
      */
+
+    _longitude += [self getRandomValue] * 0.01;
+    _latitude += [self getRandomValue] * 0.01;
+
     NSLog(@"Location Sensor -- %@", [self describeStatus]);
 }
 
