@@ -29,9 +29,10 @@ enum intervalMultiplier {
 @property short protversion;
 @property short hwstatus;
 @property BOOL hasGpsSensor;
+@property BOOL deviceIsRunning;
+@property BOOL deviceIsDetached;
 @property unsigned char impactDetector;
 @property NSInteger timeCost;
-@property BOOL deviceIsRunning;
 @property NSDate *lastUpdate;
 //@property (strong) NSDictionary *builtinSensors;
 @property (strong) NSString *serverUrl;
@@ -45,6 +46,7 @@ enum intervalMultiplier {
 - (void)setUpdateInterval:(NSInteger)updateInterval withMutliplier:(NSInteger)multiplier;
 - (void)startMeasuring;
 - (void)createMeasurement;
+- (void)switchDetachment;
 - (NSString *)description;
 
 @end

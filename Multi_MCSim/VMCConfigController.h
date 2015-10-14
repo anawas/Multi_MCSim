@@ -17,6 +17,7 @@
 @property (strong) IBOutlet NSTextField *timeIntervalText;
 @property (weak) IBOutlet NSMatrix *protocolVersionMatrix;
 @property int protocolVersion;
+@property (weak) IBOutlet NSButton *gpsSensorCheckbox;
 
 - (IBAction)startDeviceButtonPressed:(id)sender;
 - (IBAction)stopDeviceButtonPressed:(id)sender;

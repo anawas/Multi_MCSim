@@ -34,12 +34,15 @@ enum {
         self.protversion = version;
         self.hwstatus = 0x00;
         self.hasGpsSensor = false;
+        self.deviceIsDetached = false;
         AccelerationSensor *accSens = [[AccelerationSensor alloc] init];
         BatterySensor *battSens = [[BatterySensor alloc] init];
         
         // we start somewhere near Schweizerhalle
         LocationSensor *locSensor = [[LocationSensor alloc] initWithLongitude: 8.545117
                                                                   andLatitude: 47.367069];
+
+
         GSMSensor *gsmSensor = [[GSMSensor alloc] init];
         GPSSensor *gpsSensor = [[GPSSensor alloc] initWithLongitude:8.545117
                                                         andLatitude:47.367069];
@@ -126,10 +129,17 @@ enum {
         [data appendBytes:&_status length:1];
         [data appendBytes:&_protversion length:1];
 
+        if (self.deviceIsDetached) {
+            self.hwstatus |= 0x02;
+        } else {
+            self.hwstatus = 0x00;
+        }
+
         if (self.hasGpsSensor) {
             // the stream has GPS data
             self.hwstatus |= 0x01;
         }
+        
         [data appendBytes:&_hwstatus length:1];
     } else {
         [data appendBytes:&_status length:1];
@@ -168,6 +178,12 @@ enum {
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"DeviceUpdatedNotification" object:self];
     data = nil;
+}
+
+- (void)switchDetachment {
+    if (self.deviceIsDetached) self.deviceIsDetached = NO;
+    else self.deviceIsDetached = YES;
+    [self.deviceTimer fire];
 }
 
 - (void)createLogEntry {

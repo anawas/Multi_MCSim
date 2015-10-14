@@ -22,7 +22,9 @@
         [self.deviceName setStringValue:@"Test"];
         [self.deviceName setDelegate:self];
         self.protocolVersion = 1;
-        self.hasGps = true;
+        self.gpsSensorCheckbox.state = NSOffState;
+        self.gpsSensorCheckbox.enabled = NO;
+        self.hasGps = false;
     }
     return self;
 }
@@ -47,8 +49,11 @@
     NSMatrix *theMatrix = (NSMatrix *)sender;
     if ([[[theMatrix selectedCell] title] isEqualToString:@"V 1.0"]) {
         self.protocolVersion = 1;
+        self.gpsSensorCheckbox.state = NSOffState;
+        self.gpsSensorCheckbox.enabled = NO;
     } else {
         self.protocolVersion = 2;
+        self.gpsSensorCheckbox.enabled = YES;
     }
     NSLog(@"Stream version set to %d", self.protocolVersion);
 }
